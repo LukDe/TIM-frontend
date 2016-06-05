@@ -1,10 +1,10 @@
-import webpack from 'webpack';
-import path from 'path';
+import webpack from 'webpack'
+import path from 'path'
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('development'),
   __DEV__: true
-};
+}
 
 export default {
   debug: true,
@@ -37,4 +37,4 @@ export default {
       {test: /(\.css|\.scss)$/, loaders: ['style', 'css?sourceMap', 'sass?sourceMap']}
     ]
   }
-};
+}

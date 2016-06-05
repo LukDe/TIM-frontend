@@ -1,8 +1,11 @@
-import { combineReducers } from 'redux';
-import fuelSavings from './fuelSavingsReducer';
+// Set up your root reducer here...
+import { combineReducers } from 'redux'
+import globalReducer from './global'
+import navbarReducer from './navbar'
 
 const rootReducer = combineReducers({
-  fuelSavings
-});
+  global: globalReducer,
+  navbar: navbarReducer
+})
 
-export default rootReducer;
+export default rootReducer

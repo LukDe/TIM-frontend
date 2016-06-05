@@ -25,11 +25,13 @@
   "license": "MIT",
   "dependencies": {
     "object-assign": "4.1.0",
+    "ramda": "0.21.0",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
     "react-router": "2.4.0",
-    "redux": "3.5.2"
+    "redux": "3.5.2",
+    "semantic-ui": "2.1.8"
   },
   "devDependencies": {
     "babel-cli": "6.8.0",

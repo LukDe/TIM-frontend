@@ -1,7 +1,7 @@
 // This script removes demo app files
-import rimraf from 'rimraf';
-import fs from 'fs';
-import {chalkSuccess} from './chalkConfig';
+import rimraf from 'rimraf'
+import fs from 'fs'
+import {chalkSuccess} from './chalkConfig'
 
 /* eslint-disable no-console */
 
@@ -17,7 +17,7 @@ const pathsToRemove = [
   './src/styles',
   './src/routes.js',
   './src/index.js'
-];
+]
 
 const filesToCreate = [
   {
@@ -32,30 +32,30 @@ const filesToCreate = [
     path: './src/reducers/index.js',
     content: '// Set up your root reducer here...\n import { combineReducers } from \'redux\';\n export default combineReducers;'
   }
-];
+]
 
-function removePath(path, callback) {
-  rimraf(path, error => {
-    if (error) throw new Error(error);
-    callback();
-  });
+function removePath (path, callback) {
+  rimraf(path, (error) => {
+    if (error) throw new Error(error)
+    callback()
+  })
 }
 
-function createFile(file) {
-  fs.writeFile(file.path, file.content, error => {
-    if (error) throw new Error(error);
-  });
+function createFile (file) {
+  fs.writeFile(file.path, file.content, (error) => {
+    if (error) throw new Error(error)
+  })
 }
 
-let numPathsRemoved = 0;
-pathsToRemove.map(path => {
+let numPathsRemoved = 0
+pathsToRemove.map((path) => {
   removePath(path, () => {
-    numPathsRemoved++;
+    numPathsRemoved++
     if (numPathsRemoved === pathsToRemove.length) { // All paths have been processed
       // Now we can create files since we're done deleting.
-      filesToCreate.map(file => createFile(file));
+      filesToCreate.map((file) => createFile(file))
     }
-  });
-});
+  })
+})
 
-console.log(chalkSuccess('Demo app removed.'));
+console.log(chalkSuccess('Demo app removed.'))
