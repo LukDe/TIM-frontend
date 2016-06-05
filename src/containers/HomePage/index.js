@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { GLOBAL_FETCH_REQUESTS } from '../../constants/global'
 import MainCategories from '../../components/MainCategories'
 import OtherCategories from './../OtherCategories'
+import { GLOBAL_FETCH_REQUESTS } from '../../constants/global'
 
 import './styles.css'
 

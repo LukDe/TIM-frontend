@@ -26,7 +26,7 @@ fs.readFile('src/index.html', 'utf8', (readError, markup) => {
 
   if (useTrackJs) {
     if (trackJsToken) {
-      const trackJsCode = `<!-- BEGIN TRACKJS Note: This should be the first <script> on the page per https://my.trackjs.com/install --><script>window._trackJs = { token: '${trackJsToken}' };</script><script src=https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js></script><!-- END TRACKJS -->`;
+      const trackJsCode = `<!-- BEGIN TRACKJS Note: This should be the first <script> on the page per https://my.trackjs.com/install --><script>window._trackJs = { token: '${trackJsToken}' };</script><script src=https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js></script><!-- END TRACKJS -->`
 
       $('head').prepend(trackJsCode) // add TrackJS tracking code to the top of <head>
     } else {
