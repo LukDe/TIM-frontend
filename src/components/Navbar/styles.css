@@ -5,3 +5,11 @@
 .navbar-login-button {
   margin-top: 5px !important;
 }
+
+.navbar-container {
+  box-sizing: border-box;
+}
+
+.navbar-button:hover {
+  text-decoration: none;
+}

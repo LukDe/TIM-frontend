@@ -6,27 +6,20 @@
  * contain code that should be seen on all pages. (e.g. navigation bar).
  */
 
-// Import global semantic .css and .js files to be used on the whole
-// application.
-// -----------------------------------------------------------------
-
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import TimNavbar from '../TimNavbar'
 
 import './styles.css'
 
-class App extends Component {
-  render () {
-    return (
-      <div>
-        <TimNavbar />
-        <div className="app-main-content">
-        {this.props.children}
-        </div>
-      </div>
-    )
-  }
-}
+const App = ({ children }) =>
+  <div className="app-all-content">
+    <TimNavbar />
+    <div className="ui grid">
+      <div className="two wide column">asoiads</div>
+      <div className="twelve wide column app-main-content">{children}</div>
+      <div className="two wide column"></div>
+    </div>
+  </div>
 
 App.propTypes = {
   children: PropTypes.node

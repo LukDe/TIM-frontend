@@ -17,7 +17,6 @@ class HomePage extends Component {
   render () {
     return (
       <div className="ui container home-page-top-spacing">
-        <h2 className="ui dividing header">Main Categories</h2>
         <MainCategories />
         <h2 className="ui dividing header">Others</h2>
         <OtherCategories />

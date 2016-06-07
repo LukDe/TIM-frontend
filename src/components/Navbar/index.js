@@ -10,6 +10,10 @@ class Navbar extends Component {
     $('.ui.dropdown').dropdown()
   }
 
+  componentDidUpdate () {
+    $('.ui.dropdown').dropdown()
+  }
+
   render () {
     const { selection, onClick, username } = this.props
     const rightContent = username
@@ -23,14 +27,14 @@ class Navbar extends Component {
         </div>)
       : (<div className="item">
           <Link to="/login" onClick={() => onClick('LOGIN')}
-                className="ui inverted green button 'navbar-login-button">
+                className="ui inverted green button navbar-login-button">
             Login
           </Link>
         </div>)
 
     return (
       <div>
-        <div className="ui labeled icon top fixed menu">
+        <div className="ui labeled icon top fixed menu navbar-container">
           <div className="item">
             <img className="navbar-tim-icon" src={require('../../img/tim_gradient.svg')} />
           </div>

@@ -1,6 +1,9 @@
-.app-main-content {
-  margin-top: 110px;
+.app-all-content {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-body {
+.app-main-content {
+  margin-top: 100px;
 }

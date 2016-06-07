@@ -1,58 +1,98 @@
-import React from 'react'
+import R from 'ramda'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 
-function MainCategories () {
-  return (
-    <div className="ui four column grid">
-      <div className="column">
-        <div className="content">
-          <div className="ui labeled button" tabindex="0">
-            <div className="ui teal button">
-              Wasser
+import './styles.css'
+
+class MainCategories extends Component {
+  componentDidMount () {
+    $('.ui.dimmer').css('background-color', 'rgba(0, 0, 0, 0.3)')
+    // $('.ui.dimmer h2').css('color', '#03FF7E')
+    $('.ui.dimmer').dimmer({
+      on: 'hover'
+    })
+  }
+
+  render () {
+    const { requests, isFetching } = this.props
+    const addQuantity = (acc, elem) => acc + elem.quantity
+    const getTotals = (goodName) => R.pipe(
+      R.filter((req) => req.goodName === goodName),
+      R.reduce(addQuantity, 0)
+    )
+    return (
+      <div className="ui link cards main-categories-cards-container">
+        <div className="card main-categories-card">
+          <div className="ui small image">
+            <img src={require('../../img/water.svg')} />
+          </div>
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <h2 className="ui inverted icon header">
+                  {isFetching ? '' : getTotals('water')(requests)}
+                </h2>
+              </div>
             </div>
-            <a href="#" className="ui basic teal left pointing label">
-              40
-            </a>
+          </div>
+        </div>
+        <div className="card main-categories-card">
+          <div className="ui small image">
+            <img src={require('../../img/clothes.svg')} />
+          </div>
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <h2 className="ui inverted icon header">
+                  {isFetching ? '' : getTotals('clothes')(requests)}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card main-categories-card">
+          <div className="ui small image">
+            <img src={require('../../img/woundcare.svg')} />
+          </div>
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <h2 className="ui inverted icon header">
+                  {isFetching ? '' : getTotals('woundcare')(requests)}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card main-categories-card">
+          <div className="ui small image">
+            <img src={require('../../img/accomodation.svg')} />
+          </div>
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <h2 className="ui inverted icon header">
+                  {isFetching ? '' : getTotals('accomodation')(requests)}
+                </h2>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="column">
-        <div className="content">
-          <div className="ui labeled button" tabindex="0">
-            <div className="ui teal button">
-              Kleidung
-            </div>
-            <a href="#" className="ui basic teal left pointing label">
-              40
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="column">
-        <div className="content">
-          <div className="ui labeled button" tabindex="0">
-            <div className="ui teal button">
-              Woundcare
-            </div>
-            <a href="#" className="ui basic teal left pointing label">
-              40
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="column">
-        <div className="content">
-          <div className="ui labeled button" tabindex="0">
-            <div className="ui teal button">
-              Unterkunft
-            </div>
-            <a href="#" className="ui basic teal left pointing label">
-              40
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
-export default MainCategories
+MainCategories.propTypes = {
+  requests: PropTypes.array,
+  isFetching: PropTypes.bool
+}
+
+const mapStateToProps = (state) => ({
+  requests: R.path(['global', 'requests', 'data'], state),
+  isFetching: R.path(['global', 'requests', 'isFetching'], state)
+})
+
+const mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainCategories)

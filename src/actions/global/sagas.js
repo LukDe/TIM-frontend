@@ -10,7 +10,7 @@ import Api from '../../containers/App/api'
 
 function * fetchRequests () {
   try {
-    yield put({ type: GLOBAL_FETCH_REQUESTS_PENDING, requests })
+    yield put({ type: GLOBAL_FETCH_REQUESTS_PENDING })
     const requests = yield call(Api.getRequests)
     yield put({ type: GLOBAL_FETCH_REQUESTS_SUCCESS, requests })
   } catch (e) {

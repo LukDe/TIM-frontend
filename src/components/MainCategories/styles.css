@@ -1,0 +1,8 @@
+.main-categories-card {
+  max-width: 150px !important;
+}
+
+.main-categories-cards-container {
+  display: flex;
+  justify-content: space-around;
+}
