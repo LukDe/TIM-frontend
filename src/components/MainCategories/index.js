@@ -15,10 +15,9 @@ class MainCategories extends Component {
 
   render () {
     const { requests, isFetching } = this.props
-    const addQuantity = (acc, elem) => acc + elem.quantity
     const getTotals = (goodName) => R.pipe(
       R.filter((req) => req.goodName === goodName),
-      R.reduce(addQuantity, 0)
+      R.reduce((acc, elem) => acc + elem.quantity, 0)
     )
     return (
       <div className="ui link cards main-categories-cards-container">
