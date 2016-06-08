@@ -2,10 +2,18 @@ import R from 'ramda'
 import {
   GLOBAL_FETCH_REQUESTS_PENDING,
   GLOBAL_FETCH_REQUESTS_SUCCESS,
-  GLOBAL_FETCH_REQUESTS_FAIL
+  GLOBAL_FETCH_REQUESTS_FAIL,
+  GLOBAL_USER_LOGIN_PENDING,
+  GLOBAL_USER_LOGIN_SUCCESS,
+  GLOBAL_USER_LOGIN_FAIL
 } from '../constants/global'
 
 const initialState = {
+  user: {
+    isFetching: false,
+    data: null,
+    error: false
+  },
   requests: {
     data: null,
     isFetching: true,
@@ -33,6 +41,27 @@ function globalReducer (state = initialState, action) {
       return R.pipe(
           R.assocPath(['requests', 'isFetching'], false),
           R.assocPath(['requests', 'error'], true)
+        )(state)
+
+    case GLOBAL_USER_LOGIN_SUCCESS:
+      return R.pipe(
+          R.assocPath(['user', 'isFetching'], false),
+          R.assocPath(['user', 'data'], action.userData),
+          R.assocPath(['user', 'error'], false)
+        )(state)
+
+    case GLOBAL_USER_LOGIN_FAIL:
+      return R.pipe(
+          R.assocPath(['user', 'isFetching'], false),
+          R.assocPath(['user', 'data'], null),
+          R.assocPath(['user', 'error'], true)
+        )(state)
+
+    case GLOBAL_USER_LOGIN_PENDING:
+      return R.pipe(
+          R.assocPath(['user', 'isFetching'], true),
+          R.assocPath(['user', 'data'], null),
+          R.assocPath(['user', 'error'], false)
         )(state)
 
     default:

@@ -14,7 +14,7 @@ class MainCategories extends Component {
   }
 
   render () {
-    const { requests, isFetching } = this.props
+    const { requests, isFetching, requestsError } = this.props
     const getTotals = (goodName) => R.pipe(
       R.filter((req) => req.goodName === goodName),
       R.reduce((acc, elem) => acc + elem.quantity, 0)
@@ -29,7 +29,7 @@ class MainCategories extends Component {
             <div className="content">
               <div className="center">
                 <h2 className="ui inverted icon header">
-                  {isFetching ? '' : getTotals('water')(requests)}
+                  {isFetching || requestsError ? '' : getTotals('water')(requests)}
                 </h2>
               </div>
             </div>
@@ -43,7 +43,7 @@ class MainCategories extends Component {
             <div className="content">
               <div className="center">
                 <h2 className="ui inverted icon header">
-                  {isFetching ? '' : getTotals('clothes')(requests)}
+                  {isFetching || requestsError ? '' : getTotals('clothes')(requests)}
                 </h2>
               </div>
             </div>
@@ -57,7 +57,7 @@ class MainCategories extends Component {
             <div className="content">
               <div className="center">
                 <h2 className="ui inverted icon header">
-                  {isFetching ? '' : getTotals('woundcare')(requests)}
+                  {isFetching || requestsError ? '' : getTotals('woundcare')(requests)}
                 </h2>
               </div>
             </div>
@@ -71,7 +71,7 @@ class MainCategories extends Component {
             <div className="content">
               <div className="center">
                 <h2 className="ui inverted icon header">
-                  {isFetching ? '' : getTotals('accomodation')(requests)}
+                  {isFetching || requestsError ? '' : getTotals('accomodation')(requests)}
                 </h2>
               </div>
             </div>
@@ -84,12 +84,14 @@ class MainCategories extends Component {
 
 MainCategories.propTypes = {
   requests: PropTypes.array,
-  isFetching: PropTypes.bool
+  isFetching: PropTypes.bool,
+  requestsError: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
   requests: R.path(['global', 'requests', 'data'], state),
-  isFetching: R.path(['global', 'requests', 'isFetching'], state)
+  isFetching: R.path(['global', 'requests', 'isFetching'], state),
+  requestsError: R.path(['global', 'requests', 'error'], state)
 })
 
 const mapDispatchToProps = (dispatch) => ({})
