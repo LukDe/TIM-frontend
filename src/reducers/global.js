@@ -5,7 +5,8 @@ import {
   GLOBAL_FETCH_REQUESTS_FAIL,
   GLOBAL_USER_LOGIN_PENDING,
   GLOBAL_USER_LOGIN_SUCCESS,
-  GLOBAL_USER_LOGIN_FAIL
+  GLOBAL_USER_LOGIN_FAIL,
+  GLOBAL_USER_LOGOUT
 } from '../constants/global'
 
 const initialState = {
@@ -60,6 +61,13 @@ function globalReducer (state = initialState, action) {
     case GLOBAL_USER_LOGIN_PENDING:
       return R.pipe(
           R.assocPath(['user', 'isFetching'], true),
+          R.assocPath(['user', 'data'], null),
+          R.assocPath(['user', 'error'], false)
+        )(state)
+
+    case GLOBAL_USER_LOGOUT:
+      return R.pipe(
+          R.assocPath(['user', 'isFetching'], false),
           R.assocPath(['user', 'data'], null),
           R.assocPath(['user', 'error'], false)
         )(state)

@@ -15,14 +15,14 @@ class Navbar extends Component {
   }
 
   render () {
-    const { selection, onClick, username } = this.props
+    const { selection, onClick, username, onLogout } = this.props
     const rightContent = username
       ? (<div className="ui dropdown item">
            <i className="user icon"></i>
            {username}
            <div className="menu">
              <a className="item">Settings</a>
-             <a className="item">Log-out</a>
+             <Link to="/login" onClick={() => onLogout()} className="item">Log-out</Link>
            </div>
         </div>)
       : (<div className="item">
@@ -65,7 +65,8 @@ class Navbar extends Component {
 Navbar.propTypes = {
   selection: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  username: PropTypes.string
+  username: PropTypes.string,
+  onLogout: PropTypes.func
 }
 
 export default Navbar
