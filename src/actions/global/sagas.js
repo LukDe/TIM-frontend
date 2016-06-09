@@ -1,45 +1,38 @@
 import { takeEvery, takeLatest } from 'redux-saga'
 import { call, put, fork } from 'redux-saga/effects'
-import {
-  GLOBAL_FETCH_REQUESTS,
-  GLOBAL_FETCH_REQUESTS_FAIL,
-  GLOBAL_FETCH_REQUESTS_SUCCESS,
-  GLOBAL_FETCH_REQUESTS_PENDING,
-  GLOBAL_USER_LOGIN,
-  GLOBAL_USER_LOGIN_SUCCESS,
-  GLOBAL_USER_LOGIN_FAIL,
-  GLOBAL_USER_LOGIN_PENDING
-} from '../../constants/global'
+
+import * as Types from '../../constants/global'
+import * as AC from '../../actions/global'
 import Api from '../../containers/App/api'
 
 export function * fetchRequests () {
   try {
-    yield put({ type: GLOBAL_FETCH_REQUESTS_PENDING })
+    yield put(AC.fetchRequestsPending())
     const requests = yield call(Api.getRequests)
-    yield put({ type: GLOBAL_FETCH_REQUESTS_SUCCESS, requests })
+    yield put(AC.fetchRequestsSuccess(requests))
   } catch (e) {
-    yield put({ type: GLOBAL_FETCH_REQUESTS_FAIL })
+    yield put(AC.fetchRequestsFail())
   }
 }
 
 function * fetchRequestsSaga () {
-  yield * takeEvery(GLOBAL_FETCH_REQUESTS, fetchRequests)
+  yield * takeEvery(Types.GLOBAL_FETCH_REQUESTS, fetchRequests)
 }
 
 // -----------------------------------------------------------------
 
 export function * userLogin (credentials) {
   try {
-    yield put({ type: GLOBAL_USER_LOGIN_PENDING })
+    yield put(AC.userLoginPending())
     const userData = yield call(Api.userLogin, credentials)
-    yield put({ type: GLOBAL_USER_LOGIN_SUCCESS, userData })
+    yield put(AC.userLoginSuccess(userData))
   } catch (e) {
-    yield put({ type: GLOBAL_USER_LOGIN_FAIL })
+    yield put(AC.userLoginFail())
   }
 }
 
 function * userLoginSaga () {
-  yield * takeLatest(GLOBAL_USER_LOGIN, userLogin)
+  yield * takeLatest(Types.GLOBAL_USER_LOGIN, userLogin)
 }
 
 export default function * rootSaga () {

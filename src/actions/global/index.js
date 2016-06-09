@@ -1,18 +1,15 @@
-import {
-  GLOBAL_USER_LOGIN,
-  GLOBAL_FETCH_REQUESTS,
-  GLOBAL_USER_LOGOUT
-} from '../../constants/global'
+import * as Types from '../../constants/global'
+import { mkActionCreator } from '../../utils/actions'
 
-export const userLogin = (credentials) => ({
-  type: GLOBAL_USER_LOGIN,
-  credentials
-})
-
-export const userLogout = () => ({
-  type: GLOBAL_USER_LOGOUT
-})
-
-export const fetchRequests = () => ({
-  type: GLOBAL_FETCH_REQUESTS
-})
+// User Login
+export const userLogin = mkActionCreator(Types.GLOBAL_USER_LOGIN)
+export const userLoginPending = mkActionCreator(Types.GLOBAL_USER_LOGIN_PENDING)
+export const userLoginSuccess = mkActionCreator(Types.GLOBAL_USER_LOGIN_SUCCESS, 'userData')
+export const userLoginFail = mkActionCreator(Types.GLOBAL_USER_LOGIN_FAIL)
+// User Logout
+export const userLogout = mkActionCreator(Types.GLOBAL_USER_LOGOUT)
+// Fetch requests
+export const fetchRequests = mkActionCreator(Types.GLOBAL_FETCH_REQUESTS)
+export const fetchRequestsPending = mkActionCreator(Types.GLOBAL_FETCH_REQUESTS_PENDING)
+export const fetchRequestsSuccess = mkActionCreator(Types.GLOBAL_FETCH_REQUESTS_SUCCESS, 'requests')
+export const fetchRequestsFail = mkActionCreator(Types.GLOBAL_FETCH_REQUESTS_FAIL)

@@ -1,8 +1,4 @@
-import { NAVBAR_SELECT } from '../constants/navbar'
+import * as Types from '../constants/navbar'
+import { mkActionCreator } from '../utils/actions'
 
-export function navbarSelect (selection) {
-  return {
-    type: NAVBAR_SELECT,
-    selection
-  }
-}
+export const navbarSelect = mkActionCreator(Types.NAVBAR_SELECT, 'selection')

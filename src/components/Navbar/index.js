@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
+import NavbarItem from '../NavbarItem'
 
 import './styles.css'
 
@@ -11,6 +12,8 @@ class Navbar extends Component {
   }
 
   componentDidUpdate () {
+    // When the component is again updated, activates again the dropdown.
+    // This is necessary when the user logs in and the login button disappears.
     $('.ui.dropdown').dropdown()
   }
 
@@ -38,21 +41,18 @@ class Navbar extends Component {
           <div className="item">
             <img className="navbar-tim-icon" src={require('../../img/tim_gradient.svg')} />
           </div>
-          <Link to="/" onClick={() => onClick('RANKING')}
-                className={`green item ${selection === 'RANKING' ? 'active' : ''}`}>
-            <i className="feed icon" />
-            Ranking
-          </Link>
-          <Link to="/request" onClick={() => onClick('REQUEST')}
-                className={`green item ${selection === 'REQUEST' ? 'active' : ''}`}>
-            <i className="flag icon" />
-            Request
-          </Link>
-          <Link to="/offer" onClick={() => onClick('OFFER')}
-                className={`green item ${selection === 'OFFER' ? 'active' : ''}`}>
-            <i className="doctor icon" />
-            Offer
-          </Link>
+          <NavbarItem to="/" icon="feed"
+                      onClick={() => onClick('RANKING')}
+                      selected={selection === 'RANKING'}
+                      name='Ranking' />
+          <NavbarItem to="/request" icon="flag"
+                      onClick={() => onClick('REQUEST')}
+                      selected={selection === 'REQUEST'}
+                      name='Request' />
+          <NavbarItem to="/offer" icon="doctor"
+                      onClick={() => onClick('OFFER')}
+                      selected={selection === 'OFFER'}
+                      name='Offer' />
           <div className="right menu">
             {rightContent}
           </div>
