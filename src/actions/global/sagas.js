@@ -12,13 +12,12 @@ import {
 } from '../../constants/global'
 import Api from '../../containers/App/api'
 
-function * fetchRequests () {
+export function * fetchRequests () {
   try {
     yield put({ type: GLOBAL_FETCH_REQUESTS_PENDING })
     const requests = yield call(Api.getRequests)
     yield put({ type: GLOBAL_FETCH_REQUESTS_SUCCESS, requests })
   } catch (e) {
-    console.log(`error: ${e}`)
     yield put({ type: GLOBAL_FETCH_REQUESTS_FAIL })
   }
 }
@@ -29,13 +28,12 @@ function * fetchRequestsSaga () {
 
 // -----------------------------------------------------------------
 
-function * userLogin (credentials) {
+export function * userLogin (credentials) {
   try {
     yield put({ type: GLOBAL_USER_LOGIN_PENDING })
     const userData = yield call(Api.userLogin, credentials)
     yield put({ type: GLOBAL_USER_LOGIN_SUCCESS, userData })
   } catch (e) {
-    console.log(`error by login: ${e}`)
     yield put({ type: GLOBAL_USER_LOGIN_FAIL })
   }
 }
