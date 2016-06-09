@@ -4,14 +4,7 @@ import { expect } from 'chai'
 import { put, call } from 'redux-saga/effects'
 
 import Api from '../../containers/App/api'
-import {
-  GLOBAL_FETCH_REQUESTS_PENDING,
-  GLOBAL_FETCH_REQUESTS_SUCCESS,
-  GLOBAL_FETCH_REQUESTS_FAIL,
-  GLOBAL_USER_LOGIN_PENDING,
-  GLOBAL_USER_LOGIN_SUCCESS,
-  GLOBAL_USER_LOGIN_FAIL
-} from '../../constants/global'
+import * as Types from '../../constants/global'
 import { fetchRequests, userLogin } from './sagas'
 
 describe('fetchRequestsSaga', function () {
@@ -25,7 +18,7 @@ describe('fetchRequestsSaga', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      put({ type: GLOBAL_FETCH_REQUESTS_PENDING })
+      put({ type: Types.GLOBAL_FETCH_REQUESTS_PENDING })
     )
 
     expect(
@@ -38,14 +31,14 @@ describe('fetchRequestsSaga', function () {
     expect(
       gen.next(requests).value
     ).to.be.eql(
-      put({ type: GLOBAL_FETCH_REQUESTS_SUCCESS, requests }))
+      put({ type: Types.GLOBAL_FETCH_REQUESTS_SUCCESS, requests }))
   })
 
   it('creates PENDING and FAIL actions', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      put({ type: GLOBAL_FETCH_REQUESTS_PENDING })
+      put({ type: Types.GLOBAL_FETCH_REQUESTS_PENDING })
     )
 
     expect(
@@ -57,7 +50,7 @@ describe('fetchRequestsSaga', function () {
     expect(
       gen.throw({ error: 'Any error' }).value
     ).to.be.eql(
-      put({ type: GLOBAL_FETCH_REQUESTS_FAIL })
+      put({ type: Types.GLOBAL_FETCH_REQUESTS_FAIL })
     )
   })
 
@@ -77,7 +70,7 @@ describe('userLoginSaga', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      put({ type: GLOBAL_USER_LOGIN_PENDING })
+      put({ type: Types.GLOBAL_USER_LOGIN_PENDING })
     )
 
     expect(
@@ -90,7 +83,7 @@ describe('userLoginSaga', function () {
     expect(
       gen.next(userData).value
     ).to.be.eql(
-      put({ type: GLOBAL_USER_LOGIN_SUCCESS, userData })
+      put({ type: Types.GLOBAL_USER_LOGIN_SUCCESS, userData })
     )
   })
 
@@ -98,7 +91,7 @@ describe('userLoginSaga', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      put({ type: GLOBAL_USER_LOGIN_PENDING })
+      put({ type: Types.GLOBAL_USER_LOGIN_PENDING })
     )
 
     expect(
@@ -110,7 +103,7 @@ describe('userLoginSaga', function () {
     expect(
       gen.throw({ error: 'any error' }).value
     ).to.be.eql(
-      put({ type: GLOBAL_USER_LOGIN_FAIL })
+      put({ type: Types.GLOBAL_USER_LOGIN_FAIL })
     )
   })
 })
