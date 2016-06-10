@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from 'redux-saga'
+import { takeEvery } from 'redux-saga'
 import { call, put, fork } from 'redux-saga/effects'
 
 import * as Types from '../../constants/global'
@@ -32,7 +32,7 @@ export function * userLogin (credentials) {
 }
 
 function * userLoginSaga () {
-  yield * takeLatest(Types.GLOBAL_USER_LOGIN, userLogin)
+  yield * takeEvery(Types.GLOBAL_USER_LOGIN, userLogin)
 }
 
 export default function * rootSaga () {
