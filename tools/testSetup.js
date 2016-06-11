@@ -17,6 +17,12 @@ process.env.NODE_ENV = 'test'
   require.extensions[ext] = () => null
 })
 
+// Use chai plugins.
+const chai = require('chai')
+const chaiEnzyme = require('chai-enzyme')
+chai.use(chaiEnzyme())
+
+require('babel-polyfill')
 // Register babel so that it will transpile ES6 to ES5
 // before our tests run.
 require('babel-register')()

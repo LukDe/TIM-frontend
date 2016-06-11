@@ -28,7 +28,7 @@ describe('<NavbarItem />', function () {
 
   it('should contain one <Link /> component', function () {
     const wrapper = shallow(navbarItem)
-    expect(wrapper.find(Link)).to.have.length(1)
+    expect(wrapper).to.have.exactly(1).descendants(Link)
   })
 
   it('should call onClick when clicked', function () {
@@ -40,6 +40,8 @@ describe('<NavbarItem />', function () {
 
   it('should have an `active` class when selected', function () {
     const wrapper = mount(navbarItem)
-    expect(wrapper.find('.green.item.active')).to.have.length(1)
+    expect(wrapper.find(Link)).to.have.className('active')
+    wrapper.setProps({ selected: false })
+    expect(wrapper.find(Link)).to.not.have.className('active')
   })
 })

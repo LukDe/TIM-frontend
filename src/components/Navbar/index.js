@@ -63,7 +63,7 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  selection: PropTypes.string,
+  selection: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   username: PropTypes.string,
   onLogout: PropTypes.func
