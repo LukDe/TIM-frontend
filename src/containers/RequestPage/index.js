@@ -3,73 +3,104 @@ import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
-import { userLogin } from '../../actions/global'
 import { navbarSelect } from '../../actions/navbar'
-import { offerValidation } from './validation'
-
-
+import { requestValidation } from './validation'
 
 class RequestPage extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      username : this.props.userData,
-      goodName : '',
-      misc : '',
-      quantity : '',
-      range : '',
-      postalCode : '',
-      priority : ''
+      username: this.props.userData,
+      goodName: '',
+      misc: '',
+      quantity: '',
+      range: '',
+      postalCode: '',
+      priority: '',
+      labelText: "Wie viel Liter Wasser brauchen Sie?",
+      placeholderText: "Liter"
     }
   }
 
   componentDidMount () {
-      $('.ui.form').form(offerValidation)
-      $('#offer-form').submit(() => {
-        const isFormValid = $('#offer-form').form('is valid')
-        if (isFormValid) {
-          this.props.onSub(this.state)
-        }
-        return false
-      })
+    $('.ui.form').form(requestValidation)
+    $('#offer-form').submit(() => {
+      const isFormValid = $('#offer-form').form('is valid')
+      if (isFormValid) {
+        this.props.onSub(this.state)
+      }
+      return false
+    })
   }
 
   handleChange (prop) {
     return (event) => {
-      this.setState({ [prop]: event.target.value })
+      this.setState({ [prop]: event.target.value }) // eslint-disable-line
     }
   }
 
+  labelUpdater (cat) {
+    switch (cat) {
+      case "water":
+        return (event) => {
+            this.setState({labelText: 'Wie viel Liter Wasser brauchen Sie?', placeholderText: 'Liter'}) // eslint-disable-line
+        }
+      case "food":
+        return (event) => {
+            this.setState({labelText: 'Wie viele Mahlzeiten brauchen Sie?', placeholderText: 'Mahlzeiten'}) // eslint-disable-line
+        }
+      case "woundcare":
+        return (event) => {
+            this.setState({labelText: 'Wie viele Verbandskästen brauchen Sie?', placeholderText: 'Verbandskästen'}) // eslint-disable-line
+        }
+      case "clothes":
+        return (event) => {
+            this.setState({labelText: 'Wie viele Kleidungen brauchen Sie?', placeholderText: 'Anzahl'}) // eslint-disable-line
+        }
+      case "accomodation":
+        return (event) => {
+            this.setState({labelText: 'Wie viele Personen brauchen Unterkunft?', placeholderText: 'Personen'}) // eslint-disable-line
+        }
+      default:
+    }
+  }
   render () {
-    return(
+    return (
         <form id="offer-form" className="ui form">
           <div className="fields">
             <label>Was wollen sie Anbieten?</label>
             <div className="field">
               <div className="ui radio checkbox">
-                <input onChange={this.handleChange('goodName')}
-                       type="radio" name="goodName" value="food"/>
-                <label><img src={require('../../img/food.png')} className="image" /></label>
-              </div>
-            </div>
-            <div className="field">
-              <div className="ui radio checkbox">
-                <input onChange={this.handleChange('goodName')}
+                <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("water")}
                        type="radio" name="goodName" value="water"/>
                 <label><img src={require('../../img/water.png')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input onChange={this.handleChange('goodName')}
+                <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("food")}
+                       type="radio" name="goodName" value="food"/>
+                <label><img src={require('../../img/food.png')} className="image" /></label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("woundcare")}
                        type="radio" name="goodName" value="woundcare"/>
                 <label><img src={require('../../img/woundcare.png')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input onChange={this.handleChange('goodName')}
+                <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("clothes")}
+                       type="radio" name="goodName" value="clothes"/>
+                <label><img src={require('../../img/clothes.png')} className="image" /></label>
+              </div>
+            </div>
+            <div className="field">
+              <div className="ui radio checkbox">
+                <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("accomodation")}
                        type="radio" name="goodName" value="accomodation"/>
                 <label><img src={require('../../img/accomodation.png')} className="image" /></label>
               </div>
@@ -83,16 +114,16 @@ class RequestPage extends Component {
             </div>
           </div>
 
-          <div className="field">
+          <div className="field hidden">
             <label>Was?</label>
-            <input onChange={this.handleChange('misc')}
-                   type="text" name="misc" placeholder="Was benötigen Sie?"/>
+            <input onChange={this.handleChange('misc')} id = "misc"
+                   type="text" name="misc" placeholder= "Was brauchen sie?"/>
           </div>
 
           <div className="field">
-            <label>Wieviel?</label>
+            <label>{this.state.labelText}</label>
             <input onChange={this.handleChange('quantity')}
-                   type="text" name="quantity" placeholder="Anzahl"/>
+                   type="text" name="quantity" placeholder={this.state.placeholderText}/>
           </div>
 
           <div className="field">
@@ -141,16 +172,25 @@ class RequestPage extends Component {
 RequestPage.propTypes = {
   onSub: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
-  userData: PropTypes.object.isRequired
+  userData: PropTypes.string.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onSub (payload) {
+  onSub (state) {
+    const payload = {
+      username: state.username,
+      goodName: state.goodName,
+      misc: state.misc,
+      quantity: state.quantity,
+      range: state.range,
+      postalCode: state.postalCode,
+      priority: state.priority
+    }
     console.log(payload)
     fetch('http://localhost:8000/api/requests/', {
-     method: "POST",
-     body: JSON.stringify(payload),
-     headers: new Headers({'Content-Type': 'application/json'})
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: new Headers({'Content-Type': 'application/json'})
     })
     browserHistory.push('/')
     dispatch(navbarSelect('RANKING'))
