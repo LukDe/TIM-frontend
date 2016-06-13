@@ -8,11 +8,7 @@ export const offerValidation = {
           prompt: 'Bitte geben sie eine Postleitzahl an.'
         },
         {
-          type: 'integer',
-          prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
-        },
-        {
-          type: 'length[5]',
+          type: 'integer[1..99999]',
           prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
         }
       ]
