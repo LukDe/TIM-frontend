@@ -17,7 +17,7 @@ class OfferPage extends Component {
       quantity: '',
       range: '',
       postalCode: '',
-      labelText: "Wie viel Liter Wasser brauchen Sie?",
+      labelText: 'Wie viel Liter Wasser bieten Sie an?',
       placeholderText: "Liter"
     }
   }
@@ -73,35 +73,35 @@ class OfferPage extends Component {
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("water")}
                        type="radio" name="goodName" value="water"/>
-                <label><img src={require('../../img/water.png')} className="image" /></label>
+                <label><img src={require('../../img/water.svg')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("food")}
                        type="radio" name="goodName" value="food"/>
-                <label><img src={require('../../img/food.png')} className="image" /></label>
+                <label><img src={require('../../img/food.svg')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("woundcare")}
                        type="radio" name="goodName" value="woundcare"/>
-                <label><img src={require('../../img/woundcare.png')} className="image" /></label>
+                <label><img src={require('../../img/woundcare.svg')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("clothes")}
                        type="radio" name="goodName" value="clothes"/>
-                <label><img src={require('../../img/clothes.png')} className="image" /></label>
+                <label><img src={require('../../img/clothes.svg')} className="image" /></label>
               </div>
             </div>
             <div className="field">
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("accomodation")}
                        type="radio" name="goodName" value="accomodation"/>
-                <label><img src={require('../../img/accomodation.png')} className="image" /></label>
+                <label><img src={require('../../img/accomodation.svg')} className="image" /></label>
               </div>
             </div>
           </div>
