@@ -41,15 +41,15 @@ class Navbar extends Component {
           <div className="item">
             <img className="navbar-tim-icon" src={require('../../img/tim_gradient.svg')} />
           </div>
-          <NavbarItem to="/" icon="feed"
+          <NavbarItem to="/" icon="line chart"
                       onClick={() => onClick('RANKING')}
                       selected={selection === 'RANKING'}
                       name='Ranking' />
-          <NavbarItem to="/request" icon="flag"
+          <NavbarItem to="/request" icon="search"
                       onClick={() => onClick('REQUEST')}
                       selected={selection === 'REQUEST'}
                       name='Request' />
-          <NavbarItem to="/offer" icon="doctor"
+          <NavbarItem to="/offer" icon="send"
                       onClick={() => onClick('OFFER')}
                       selected={selection === 'OFFER'}
                       name='Offer' />

@@ -6,3 +6,7 @@
   display: flex;
   justify-content: space-around;
 }
+
+.categorie-round {
+  border-radius: 150px !important;
+}

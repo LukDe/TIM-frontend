@@ -49,7 +49,7 @@ class MainCategories extends Component {
             </div>
           </div>
         </div>
-        <div className="card main-categories-card">
+        <div className="card main-categories-card categorie-round">
           <div className="ui small image">
             <img src={require('../../img/woundcare.svg')} />
           </div>
