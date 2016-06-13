@@ -24,7 +24,7 @@ function getRequests () {
  // FIXME: Use the real implementation
 function userLogin (credentials) {
   const userData = {
-    userame: 'bob',
+    userame: 'Bob',
     email: 'ararar@example.com'
   }
   return new Promise((resolve, reject) => {
