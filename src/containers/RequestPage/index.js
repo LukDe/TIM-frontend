@@ -19,7 +19,8 @@ class RequestPage extends Component {
       postalCode: '',
       priority: '',
       labelText: "Wie viel Liter Wasser brauchen Sie?",
-      placeholderText: "Liter"
+      placeholderText: "Liter",
+      miscHidden: true
     }
   }
 
@@ -44,23 +45,27 @@ class RequestPage extends Component {
     switch (cat) {
       case "water":
         return (event) => {
-            this.setState({labelText: 'Wie viel Liter Wasser brauchen Sie?', placeholderText: 'Liter'}) // eslint-disable-line
+            this.setState({labelText: 'Wie viel Liter Wasser brauchen Sie?', placeholderText: 'Liter', miscHidden: true}) // eslint-disable-line
         }
       case "food":
         return (event) => {
-            this.setState({labelText: 'Wie viele Mahlzeiten brauchen Sie?', placeholderText: 'Mahlzeiten'}) // eslint-disable-line
+            this.setState({labelText: 'Wie viele Mahlzeiten brauchen Sie?', placeholderText: 'Mahlzeiten', miscHidden: true}) // eslint-disable-line
         }
       case "woundcare":
         return (event) => {
-            this.setState({labelText: 'Wie viele Verbandskästen brauchen Sie?', placeholderText: 'Verbandskästen'}) // eslint-disable-line
+            this.setState({labelText: 'Wie viele Verbandskästen brauchen Sie?', placeholderText: 'Verbandskästen', miscHidden: true}) // eslint-disable-line
         }
       case "clothes":
         return (event) => {
-            this.setState({labelText: 'Wie viele Kleidungen brauchen Sie?', placeholderText: 'Anzahl'}) // eslint-disable-line
+            this.setState({labelText: 'Wie viele Kleidungen brauchen Sie?', placeholderText: 'Anzahl', miscHidden: true}) // eslint-disable-line
         }
       case "accomodation":
         return (event) => {
-            this.setState({labelText: 'Wie viele Personen brauchen Unterkunft?', placeholderText: 'Personen'}) // eslint-disable-line
+            this.setState({labelText: 'Wie viele Personen brauchen Unterkunft?', placeholderText: 'Personen', miscHidden: true}) // eslint-disable-line
+        }
+      case "other":
+        return (event) => {
+            this.setState({miscHidden: false}) // eslint-disable-line
         }
       default:
     }
@@ -107,24 +112,29 @@ class RequestPage extends Component {
             </div>
             <div className="field">
               <div className="ui radio checkbox">
-                <input onChange={this.handleChange('goodName')}
+                <input onChange={this.handleChange('goodName')} onClick ={this.labelUpdater("other")}
                        type="radio" name="goodName" value="other"/>
                 <label><img src={require('../../img/other.png')} className="image" /></label>
               </div>
             </div>
           </div>
 
-          <div className="field hidden">
-            <label>Was?</label>
-            <input onChange={this.handleChange('misc')} id = "misc"
+          {this.state.miscHidden
+             ? ''
+             : (<div className="field hidden">
+                 <label>Was?</label>
+                 <input onChange={this.handleChange('misc')} id = "misc"
                    type="text" name="misc" placeholder= "Was brauchen sie?"/>
-          </div>
-
-          <div className="field">
-            <label>{this.state.labelText}</label>
-            <input onChange={this.handleChange('quantity')}
-                   type="text" name="quantity" placeholder={this.state.placeholderText}/>
-          </div>
+                </div>)
+           }
+          {this.state.miscHidden
+            ? (<div className="field">
+                <label>{this.state.labelText}</label>
+                <input onChange={this.handleChange('quantity')}
+                       type="text" name="quantity" placeholder={this.state.placeholderText}/>
+              </div>)
+            : ''
+          }
 
           <div className="field">
             <label>Wo?</label>
