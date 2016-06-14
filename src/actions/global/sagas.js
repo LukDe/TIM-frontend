@@ -16,7 +16,7 @@ export function * fetchRequests () {
   }
 }
 
-function * fetchRequestsSaga () {
+export function * fetchRequestsSaga () {
   yield * takeEvery(Types.GLOBAL_FETCH_REQUESTS, fetchRequests)
 }
 
@@ -36,13 +36,6 @@ export function * userLogin (action) {
   }
 }
 
-function * userLoginSaga () {
+export function * userLoginSaga () {
   yield * takeEvery(Types.GLOBAL_USER_LOGIN, userLogin)
-}
-
-export default function * rootSaga () {
-  yield [
-    userLoginSaga(),
-    fetchRequestsSaga()
-  ]
 }

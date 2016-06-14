@@ -8,7 +8,7 @@
 
  /**
   * Get all requests in json from the api.
-  * @return {Promise} Promise that resolves the JSON response.
+  * @return {promise} Promise that resolves the JSON response.
   */
 function getRequests () {
   return fetch('http://localhost:8000/api/requests')
@@ -19,7 +19,7 @@ function getRequests () {
  * Calls the /users/:username api to get the information about the user.
  * It works but should eventually be replaced by a more `secure` version.
  * @param  {object} userData Relevent user data for login.
- * @return {Promise}         Promise that resolves to the JSON user representation.
+ * @return {promise}         Promise that resolves to the JSON user representation.
  */
  // FIXME:
 function userLogin (credentials) {
@@ -36,7 +36,27 @@ function userLogin (credentials) {
     })
 }
 
+/**
+ * Given the payload, creates a new request.
+ * @param  {object}  payload Information about the new request.
+ * @return {promise}         Returns either an Error or a Success message.
+ */
+function createRequest (payload) {
+  return fetch('http://localhost:8000/api/requests/', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: new Headers({'Content-Type': 'application/json'})
+  }).then((response) => {
+    if (response.ok) {
+      return Promise.resolve('Request created successfully')
+    } else {
+      return Promise.reject('Error while creating the request')
+    }
+  })
+}
+
 export default {
   getRequests,
-  userLogin
+  userLogin,
+  createRequest
 }

@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
-import { navbarSelect } from '../../actions/navbar'
+import * as AC from '../../actions/request'
 import { requestValidation } from './validation'
 
 class RequestPage extends Component {
@@ -176,7 +175,6 @@ class RequestPage extends Component {
           <div className="ui error message"></div>
         </form>)
   }
-
 }
 
 RequestPage.propTypes = {
@@ -196,20 +194,13 @@ const mapDispatchToProps = (dispatch) => ({
       postalCode: state.postalCode,
       priority: state.priority
     }
-    console.log(payload)
-    fetch('http://localhost:8000/api/requests/', {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: new Headers({'Content-Type': 'application/json'})
-    })
-    browserHistory.push('/')
-    dispatch(navbarSelect('RANKING'))
+    dispatch(AC.requestNew(payload))
   }
 })
 
 const mapStateToProps = (state) => ({
   isLoggedIn: Boolean(R.path(['global', 'user', 'data'], state)),
-  userData: R.path(['global', 'user', 'data', 'userame'], state)
+  userData: R.path(['global', 'user', 'data', 'username'], state)
 })
 
 export default connect(

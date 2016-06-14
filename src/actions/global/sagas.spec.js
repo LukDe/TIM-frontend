@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import { expect } from 'chai'
 import { put, call } from 'redux-saga/effects'
 import { toastr } from 'react-redux-toastr'
