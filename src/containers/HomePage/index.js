@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import MainCategories from '../../components/MainCategories'
 import OtherCategories from './../OtherCategories'
 import { GLOBAL_FETCH_REQUESTS } from '../../constants/global'
-
+import CircleSearch from '../../components/CircleSearch'
 import './styles.css'
 
 class HomePage extends Component {
@@ -17,8 +17,12 @@ class HomePage extends Component {
   render () {
     return (
       <div className="ui container home-page-top-spacing">
+        <h1 className="ui block header">Umkreis</h1>
+        <CircleSearch/>
+        <p> </p>
+        <h1 className="ui block header">Hauptkategorien</h1>
         <MainCategories />
-        <h2 className="ui dividing header">Others</h2>
+        <h1 className="ui block header">Andere Anfrage</h1>
         <OtherCategories />
       </div>
     )

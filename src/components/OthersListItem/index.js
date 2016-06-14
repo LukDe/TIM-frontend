@@ -10,7 +10,7 @@ function OthersListItem (props) {
   } = props
   return (
     <div className="item">
-      <img className="ui avatar image" src={require('../../img/food.svg')} alt="food"/>
+      <img className="ui avatar image" src={require('../../img/other.svg')} alt="others"/>
       <div className="content">
         <div className="header">{username}</div>
         <div className="meta">{catastrophe} | {creationDate.toLocaleDateString()} | {postalCode}</div>
@@ -20,7 +20,12 @@ function OthersListItem (props) {
         <div className="extra">
         </div>
       </div>
+      <div className="react">
+        <button type="button">Reagieren</button> 
+      </div>
+      
     </div>
+
   )
 }
 
