@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga'
-import { call, put, fork } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
+import { toastr } from 'react-redux-toastr'
 
 import * as Types from '../../constants/global'
 import * as AC from '../../actions/global'
@@ -21,13 +22,17 @@ function * fetchRequestsSaga () {
 
 // -----------------------------------------------------------------
 
-export function * userLogin (credentials) {
+export function * userLogin (action) {
   try {
     yield put(AC.userLoginPending())
-    const userData = yield call(Api.userLogin, credentials)
+    const userData = yield call(Api.userLogin, action.credentials)
     yield put(AC.userLoginSuccess(userData))
-  } catch (e) {
-    yield put(AC.userLoginFail())
+    // Success toastr if everything went ok.
+    yield call(toastr.success, 'Login Successful!')
+  } catch (reason) {
+    yield put(AC.userLoginFail(reason))
+    // Error toastr on error.
+    yield call(toastr.error, reason)
   }
 }
 
@@ -36,6 +41,8 @@ function * userLoginSaga () {
 }
 
 export default function * rootSaga () {
-  yield fork(userLoginSaga)
-  yield fork(fetchRequestsSaga)
+  yield [
+    userLoginSaga(),
+    fetchRequestsSaga()
+  ]
 }

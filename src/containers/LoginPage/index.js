@@ -14,7 +14,7 @@ class LoginPage extends Component {
     super(props)
 
     this.state = {
-      email: '',
+      username: '',
       password: ''
     }
   }
@@ -27,6 +27,7 @@ class LoginPage extends Component {
       if (isFormValid) {
         this.props.onLogin(this.state)
       }
+      // Needs to return false, so the browser is not redirected.
       return false
     })
   }
@@ -55,8 +56,8 @@ class LoginPage extends Component {
               <div className="field">
                 <div className="ui left icon input">
                   <i className="user icon"></i>
-                  <input onChange={this.handleChange('email')}
-                         type="text" name="email" placeholder="E-mail address" />
+                  <input onChange={this.handleChange('username')}
+                         type="text" name="username" placeholder="Username" />
                 </div>
               </div>
               <div className="field">

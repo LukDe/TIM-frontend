@@ -1,15 +1,15 @@
 export const loginValidation = {
   fields: {
-    email: {
-      identifier: 'email',
+    username: {
+      identifier: 'username',
       rules: [
         {
           type: 'empty',
-          prompt: 'Please enter your e-mail'
+          prompt: 'Please enter your username'
         },
         {
-          type: 'email',
-          prompt: 'Please enter a valid e-mail'
+          type: 'length[3]',
+          prompt: 'Your username must have at least 3 characters'
         }
       ]
     },
@@ -22,7 +22,7 @@ export const loginValidation = {
         },
         {
           type: 'length[6]',
-          prompt: 'Your password must be at least 6 characters'
+          prompt: 'Your password must have at least 6 characters'
         }
       ]
     }

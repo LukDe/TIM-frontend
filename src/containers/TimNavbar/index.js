@@ -25,7 +25,7 @@ TimNavbar.propTypes = {
 function stateToProps (state) {
   return {
     selection: R.path(['navbar', 'selection'], state),
-    username: R.path(['global', 'user', 'data', 'email'], state)
+    username: R.path(['global', 'user', 'data', 'username'], state)
   }
 }
 

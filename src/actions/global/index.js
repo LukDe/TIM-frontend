@@ -2,10 +2,10 @@ import * as Types from '../../constants/global'
 import { mkActionCreator } from '../../utils/actions'
 
 // User Login
-export const userLogin = mkActionCreator(Types.GLOBAL_USER_LOGIN)
+export const userLogin = mkActionCreator(Types.GLOBAL_USER_LOGIN, 'credentials')
 export const userLoginPending = mkActionCreator(Types.GLOBAL_USER_LOGIN_PENDING)
 export const userLoginSuccess = mkActionCreator(Types.GLOBAL_USER_LOGIN_SUCCESS, 'userData')
-export const userLoginFail = mkActionCreator(Types.GLOBAL_USER_LOGIN_FAIL)
+export const userLoginFail = mkActionCreator(Types.GLOBAL_USER_LOGIN_FAIL, 'reason')
 // User Logout
 export const userLogout = mkActionCreator(Types.GLOBAL_USER_LOGOUT)
 // Fetch requests

@@ -1,17 +1,17 @@
 import 'babel-polyfill'
-/* eslint-disable padded-blocks */
 import { expect } from 'chai'
 import { put, call } from 'redux-saga/effects'
+import { toastr } from 'react-redux-toastr'
 
 import Api from '../../containers/App/api'
 import * as Types from '../../constants/global'
-import { fetchRequests, userLogin } from './sagas'
+import * as Sagas from './sagas'
 
 describe('fetchRequestsSaga', function () {
   let gen
 
   beforeEach(function () {
-    gen = fetchRequests()
+    gen = Sagas.fetchRequests()
   })
 
   it('creates PENDING and SUCCESS actions', function () {
@@ -31,7 +31,9 @@ describe('fetchRequestsSaga', function () {
     expect(
       gen.next(requests).value
     ).to.be.eql(
-      put({ type: Types.GLOBAL_FETCH_REQUESTS_SUCCESS, requests }))
+      put({ type: Types.GLOBAL_FETCH_REQUESTS_SUCCESS, requests })
+    )
+
   })
 
   it('creates PENDING and FAIL actions', function () {
@@ -57,13 +59,15 @@ describe('fetchRequestsSaga', function () {
 })
 
 describe('userLoginSaga', function () {
-  let gen, credentials
+  let gen, action
   beforeEach(function () {
-    credentials = {
-      username: 'blabla',
-      password: '123123'
+    action = {
+      credentials: {
+        username: 'blabla',
+        password: '123123'
+      }
     }
-    gen = userLogin(credentials)
+    gen = Sagas.userLogin(action)
   })
 
   it('sends PENDING and SUCCESS actions', function () {
@@ -76,7 +80,7 @@ describe('userLoginSaga', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      call(Api.userLogin, credentials)
+      call(Api.userLogin, action.credentials)
     )
 
     const userData = { username: 'blabla', email: 'ao@example.org' }
@@ -84,6 +88,12 @@ describe('userLoginSaga', function () {
       gen.next(userData).value
     ).to.be.eql(
       put({ type: Types.GLOBAL_USER_LOGIN_SUCCESS, userData })
+    )
+
+    expect(
+      gen.next().value
+    ).to.be.eql(
+      call(toastr.success, 'Login Successful!')
     )
   })
 
@@ -97,13 +107,19 @@ describe('userLoginSaga', function () {
     expect(
       gen.next().value
     ).to.be.eql(
-      call(Api.userLogin, credentials)
+      call(Api.userLogin, action.credentials)
     )
 
     expect(
-      gen.throw({ error: 'any error' }).value
+      gen.throw('any error').value
     ).to.be.eql(
-      put({ type: Types.GLOBAL_USER_LOGIN_FAIL })
+      put({ type: Types.GLOBAL_USER_LOGIN_FAIL, reason: 'any error' })
+    )
+
+    expect(
+      gen.next().value
+    ).to.be.eql(
+      call(toastr.error, 'any error')
     )
   })
 })
