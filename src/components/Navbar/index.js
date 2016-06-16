@@ -48,11 +48,11 @@ class Navbar extends Component {
           <NavbarItem to="/request" icon="search"
                       onClick={() => onClick('REQUEST')}
                       selected={selection === 'REQUEST'}
-                      name='Request' />
+                      name='Suchen' />
           <NavbarItem to="/offer" icon="send"
                       onClick={() => onClick('OFFER')}
                       selected={selection === 'OFFER'}
-                      name='Offer' />
+                      name='Bieten' />
           <div className="right menu">
             {rightContent}
           </div>

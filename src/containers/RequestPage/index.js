@@ -73,7 +73,7 @@ class RequestPage extends Component {
     return (
         <form id="offer-form" className="ui form">
           <div className="fields">
-            <label>Was wollen sie Anbieten?</label>
+            <label>Was brauchen Sie?</label>
             <div className="field">
               <div className="ui radio checkbox">
                 <input onChange={this.handleChange('goodName')} onClick={this.labelUpdater("water")}

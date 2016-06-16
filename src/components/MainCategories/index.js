@@ -37,13 +37,13 @@ class MainCategories extends Component {
         </div>
         <div className="card main-categories-card">
           <div className="ui small image">
-            <img src={require('../../img/clothes.svg')} />
+            <img src={require('../../img/food.svg')} />
           </div>
           <div className="ui dimmer">
             <div className="content">
               <div className="center">
                 <h2 className="ui inverted icon header">
-                  {isFetching || requestsError ? '' : getTotals('clothes')(requests)}
+                  {isFetching || requestsError ? '' : getTotals('food')(requests)}
                 </h2>
               </div>
             </div>
@@ -63,6 +63,21 @@ class MainCategories extends Component {
             </div>
           </div>
         </div>
+        <div className="card main-categories-card">
+          <div className="ui small image">
+            <img src={require('../../img/clothes.svg')} />
+          </div>
+          <div className="ui dimmer">
+            <div className="content">
+              <div className="center">
+                <h2 className="ui inverted icon header">
+                  {isFetching || requestsError ? '' : getTotals('clothes')(requests)}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div className="card main-categories-card">
           <div className="ui small image">
             <img src={require('../../img/accomodation.svg')} />
