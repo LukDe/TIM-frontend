@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import { put, call } from 'redux-saga/effects'
-import { browserHistory } from 'react-router'
 import { toastr } from 'react-redux-toastr'
 
 import Api from '../../containers/App/api'

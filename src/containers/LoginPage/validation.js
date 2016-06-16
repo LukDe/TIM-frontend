@@ -4,10 +4,6 @@ export const loginValidation = {
       identifier: 'username',
       rules: [
         {
-          type: 'empty',
-          prompt: 'Please enter your username'
-        },
-        {
           type: 'length[3]',
           prompt: 'Your username must have at least 3 characters'
         }
@@ -17,11 +13,7 @@ export const loginValidation = {
       identifier: 'password',
       rules: [
         {
-          type: 'empty',
-          prompt: 'Please enter your password'
-        },
-        {
-          type: 'length[6]',
+          type: 'length[3]',
           prompt: 'Your password must have at least 6 characters'
         }
       ]

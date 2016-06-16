@@ -23,12 +23,24 @@ function getRequests () {
  */
  // FIXME:
 function userLogin (credentials) {
-  return fetch(`http://localhost:8000/api/users/${credentials.username}`)
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  }
+  return fetch('http://localhost:8000/api/login/', options)
+    .catch((e) => {
+      Promise.reject('Error connecting to server')
+    })
     .then((response) => {
       if (response.ok) {
         return response.json()
       } else if (response.status === 404) {
         return Promise.reject('Username was not found')
+      } else if (response.status === 400) {
+        return Promise.reject('Wrong password')
       } else {
         console.log(response.status)
         return Promise.reject('Unknown error on the server')
