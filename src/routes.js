@@ -6,6 +6,7 @@ import HomePage from './containers/HomePage'
 import RequestPage from './containers/RequestPage'
 import OfferPage from './containers/OfferPage'
 import LoginPage from './containers/LoginPage'
+import RegisterPage from './containers/RegisterPage'
 import NotFoundPage from './components/NotFoundPage'
 import ImpressumPage from './components/ImpressumPage'
 import { navbarSelect } from './actions/navbar'
@@ -51,6 +52,7 @@ export default function RouteWithStore (store) {
       </Route>
 
       <Route path="login" component={LoginPage} onEnter={redirectIfLogged}/>
+      <Route path="register" component={RegisterPage} onEnter={redirectIfLogged}/>
       <Route path="impressum" component={ImpressumPage}/>
       <Route path="*" component={NotFoundPage}/>
     </Route>

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory, Link } from 'react-router'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
@@ -14,7 +14,8 @@ class LoginPage extends Component {
     super(props)
 
     this.state = {
-      username: '',
+      mobile: '',
+      postalCode: '',
       password: ''
     }
   }
@@ -27,7 +28,6 @@ class LoginPage extends Component {
       if (isFormValid) {
         this.props.onLogin(this.state)
       }
-      // Needs to return false, so the browser is not redirected.
       return false
     })
   }
@@ -54,11 +54,18 @@ class LoginPage extends Component {
           <form id="login-form" className="ui large form" >
             <div className="ui stacked segment">
               <div className="field">
-                <div className="ui left icon input">
-                  <i className="user icon"></i>
-                  <input onChange={this.handleChange('username')}
-                         type="text" name="username" placeholder="Username" />
-                </div>
+              	<div className="ui left icon input">
+              		<i className="user icon"></i>
+              		<input onChange={this.handleChange('mobile')}
+                		type="text" name="mobile" placeholder="Handynummer" />
+              	</div>
+              </div>
+              <div className="field">
+              	<div className="ui left icon input">
+              		<i className="user icon"></i>
+              		<input onChange={this.handleChange('postalCode')}
+              			type="text" name="postalCode" placeholder="PLZ" />
+              	</div>
               </div>
               <div className="field">
                 <div className="ui left icon input">
@@ -68,16 +75,12 @@ class LoginPage extends Component {
                 </div>
               </div>
               <div className={`ui fluid large green submit ${this.props.isFetching ? 'loading disabled' : ''} button`}>
-                Login
+                Create Account
               </div>
             </div>
 
             <div className="ui error message"></div>
           </form>
-
-          <div className="ui message">
-            First time using Tim? <Link to="/register">Sign Up</Link>
-          </div>
         </div>
       </div>
     )
