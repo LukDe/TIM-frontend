@@ -17,7 +17,6 @@ class OfferPage extends Component {
       offer: {
         username: this.props.userData,
         goodName: '',
-        misc: '',
         quantity: '',
         range: '',
         labelText: 'Wie viel Liter Wasser bieten Sie an?',
@@ -203,21 +202,20 @@ OfferPage.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   onSub (state) {
     const payload = {
-      username: state.username,
+      username: state.offer.username,
       goodName: state.goodName,
-      misc: state.misc,
       quantity: state.quantity,
       range: state.range,
-      postalCode: state.postalCode,
-      priority: state.priority
+      location: state.address.coords.latitude + "," + state.address.coords.longitude
     }
+    console.log(payload)
     dispatch(AC.offerNew(payload))
   }
 })
 
 const mapStateToProps = (state) => ({
   isLoggedIn: Boolean(R.path(['global', 'user', 'data'], state)),
-  userData: R.path(['global', 'user', 'data', 'userame'], state)
+  userData: R.path(['global', 'user', 'data', 'username'], state)
 })
 
 export default connect(

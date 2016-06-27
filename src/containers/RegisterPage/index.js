@@ -13,8 +13,8 @@ class RegisterPage extends Component {
     this.state = {
       username: '',
       password: '',
-      mobile: '',
-      postalCode: ''
+      phoneNr: '',
+      location: ''
     }
   }
 
@@ -47,12 +47,12 @@ class RegisterPage extends Component {
                    type="password" name="password" placeholder="Passwort"/>
           </div>
           <div className="field">
-            <input onChange={this.handleChange('mobile')}
-                   type="text" name="mobile" placeholder="Telefonnummer"/>
+            <input onChange={this.handleChange('phoneNr')}
+                   type="text" name="phoneNr" placeholder="Telefonnummer"/>
           </div>
           <div className="field">
-            <input onChange={this.handleChange('postalCode')}
-                   type="text" name="postalCode" placeholder="Postleitzahl"/>
+            <input onChange={this.handleChange('location')}
+                   type="text" name="location" placeholder="Ort"/>
           </div>
           <button className="ui button" type="submit">Abschicken</button>
           <div className="ui error message"></div>

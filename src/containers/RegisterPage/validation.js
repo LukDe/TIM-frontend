@@ -9,8 +9,8 @@ export const registerValidation = {
         }
       ]
     },
-    postalCode: {
-      identifier: 'postalCode',
+    location: {
+      identifier: 'location',
       rules: [
         {
           type: 'empty',
@@ -31,8 +31,8 @@ export const registerValidation = {
         }
       ]
     },
-    mobile: {
-      identifier: 'mobile',
+    phoneNr: {
+      identifier: 'phoneNr',
       rules: [
         {
           type: 'empty',
