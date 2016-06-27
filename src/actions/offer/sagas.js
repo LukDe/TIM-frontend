@@ -6,12 +6,12 @@ import { toastr } from 'react-redux-toastr'
 import Api from '../../containers/App/api'
 import * as AC from './index'
 import { navbarSelect } from '../navbar'
-import * as Types from '../../constants/request'
+import * as Types from '../../constants/offer'
 
-export function * newRequest (action) {
+export function * newOffer (action) {
   try {
-    yield put(AC.requestNewPending())
-    const msg = yield call(Api.createRequest, action.payload)
+    yield put(AC.offerNewPending())
+    const msg = yield call(Api.createOffer, action.payload)
     yield call(toastr.success, msg)
     yield put(navbarSelect('RANKING'))
     yield call(browserHistory.push, '/')
@@ -20,6 +20,6 @@ export function * newRequest (action) {
   }
 }
 
-export function * newRequestSaga () {
-  yield * takeLatest(Types.REQUEST_NEW, newRequest)
+export function * newOfferSaga () {
+  yield * takeLatest(Types.OFFER_NEW, newOffer)
 }

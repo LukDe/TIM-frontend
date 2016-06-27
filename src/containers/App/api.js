@@ -6,7 +6,10 @@
  * All of these functions are assumed to return a promise with the response.
  */
 
-/* Google Api functions */
+/* ====================================================== */
+/* Google Api functions                                   */
+/* ====================================================== */
+
 export const GOOGLE_MAPS_API_KEY = 'AIzaSyDKWmVq0-nJ5v6b-2x9jBkhgPuVarwipbA'
 
 function reverseGeocode (latitude, longitude) {
@@ -30,7 +33,10 @@ function geocode (address) {
 
 }
 
-/* TIM api functions */
+/* ====================================================== */
+/* TIM api functions                                      */
+/* ====================================================== */
+
 export const TIM_API_ROOT = 'http://localhost:8000/api'
 
  /**
@@ -94,10 +100,32 @@ function createRequest (payload) {
   })
 }
 
+/**
+ * Given the payload, creates a new offer.
+ * @param  {object}  payload Information about the new offer.
+ * @return {promise}         Returns either an Error or a Success message.
+ */
+function createOffer (payload) {
+  return fetch(`${TIM_API_ROOT}/offers/`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: new Headers({'Content-Type': 'application/json'})
+  }).then((response) => {
+    if (response.ok) {
+      return Promise.resolve('Offer created successfully')
+    } else {
+      return Promise.reject('Error while creating the offer')
+    }
+  })
+}
+
 export default {
+  // Tim Api
   getRequests,
   userLogin,
   createRequest,
+  createOffer,
+  // Google Api
   geocode,
   reverseGeocode
 }

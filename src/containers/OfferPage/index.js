@@ -7,6 +7,7 @@ import SelectStreetModal from '../../components/SelectStreetModal'
 import { navbarSelect } from '../../actions/navbar'
 import { offerValidation } from './validation'
 import Api from '../../containers/App/api'
+import * as AC from '../../actions/offer'
 
 class OfferPage extends Component {
   constructor (props) {
@@ -210,13 +211,7 @@ const mapDispatchToProps = (dispatch) => ({
       postalCode: state.postalCode,
       priority: state.priority
     }
-    fetch('http://localhost:8000/api/offers/', {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: new Headers({'Content-Type': 'application/json'})
-    })
-    browserHistory.push('/')
-    dispatch(navbarSelect('RANKING'))
+    dispatch(AC.offerNew(payload))
   }
 })
 
