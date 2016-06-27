@@ -6,12 +6,39 @@
  * All of these functions are assumed to return a promise with the response.
  */
 
+/* Google Api functions */
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyDKWmVq0-nJ5v6b-2x9jBkhgPuVarwipbA'
+
+function reverseGeocode (latitude, longitude) {
+  const reverseGeocodingUrl =
+    `https://maps.googleapis.com/maps/api/geocode/json` +
+    `?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
+
+  return fetch(reverseGeocodingUrl)
+    .then((response) => response.json())
+    .catch((error) => Promise.reject(`Error connecting to Google Api: ${error}`))
+}
+
+function geocode (address) {
+  console.log(`called with: ${address}`)
+  const geocodingUrl = 'https://maps.googleapis.com/maps/api/geocode/json' +
+                       `?address=${address}&key=${GOOGLE_MAPS_API_KEY}`
+
+  return fetch(geocodingUrl)
+    .then((response) => response.json())
+    .catch((error) => Promise.reject(`Error connecting to Google Api: ${error}`))
+
+}
+
+/* TIM api functions */
+export const TIM_API_ROOT = 'http://localhost:8000/api'
+
  /**
   * Get all requests in json from the api.
   * @return {promise} Promise that resolves the JSON response.
   */
 function getRequests () {
-  return fetch('http://localhost:8000/api/requests')
+  return fetch(`${TIM_API_ROOT}/requests`)
     .then((data) => data.json())
 }
 
@@ -30,7 +57,7 @@ function userLogin (credentials) {
       'Content-Type': 'application/json'
     })
   }
-  return fetch('http://localhost:8000/api/login/', options)
+  return fetch(`${TIM_API_ROOT}/login/`, options)
     .catch((e) => {
       Promise.reject('Error connecting to server')
     })
@@ -54,7 +81,7 @@ function userLogin (credentials) {
  * @return {promise}         Returns either an Error or a Success message.
  */
 function createRequest (payload) {
-  return fetch('http://localhost:8000/api/requests/', {
+  return fetch(`${TIM_API_ROOT}/requests/`, {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: new Headers({'Content-Type': 'application/json'})
@@ -70,5 +97,7 @@ function createRequest (payload) {
 export default {
   getRequests,
   userLogin,
-  createRequest
+  createRequest,
+  geocode,
+  reverseGeocode
 }
