@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
 import SelectStreetModal from '../../components/SelectStreetModal'
-import { navbarSelect } from '../../actions/navbar'
 import { offerValidation } from './validation'
 import Api from '../../containers/App/api'
 import * as AC from '../../actions/offer'
@@ -14,21 +12,20 @@ class OfferPage extends Component {
     super(props)
 
     this.state = {
-      offer: {
-        username: this.props.userData,
-        goodName: '',
-        quantity: '',
-        range: '',
-        labelText: 'Wie viel Liter Wasser bieten Sie an?',
-        placeholderText: "Liter"
-      },
+      username: this.props.userData,
+      goodName: '',
+      active: true,
+      quantity: '',
+      range: '',
       address: {
         name: '',
         coords: {
           latitude: '',
           longitude: ''
         }
-      }
+      },
+      labelText: 'Wie viel Liter Wasser bieten Sie an?',
+      placeholderText: "Liter"
     }
   }
 
@@ -127,7 +124,7 @@ class OfferPage extends Component {
       <div>
         <SelectStreetModal onClick={this.handleAddress.bind(this)} />
         <form id="offer-form" className="ui form">
-                    <div className="fields">
+          <div className="fields">
             <label>Was wollen Sie anbieten?</label>
             <div className="field">
               <div className="ui radio checkbox">
@@ -202,11 +199,11 @@ OfferPage.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   onSub (state) {
     const payload = {
-      username: state.offer.username,
+      username: state.username,
       goodName: state.goodName,
       quantity: state.quantity,
       range: state.range,
-      location: state.address.coords.latitude + "," + state.address.coords.longitude
+      location: `${state.address.coords.latitude},${state.address.coords.longitude}`
     }
     console.log(payload)
     dispatch(AC.offerNew(payload))

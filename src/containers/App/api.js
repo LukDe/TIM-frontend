@@ -106,6 +106,8 @@ function createRequest (payload) {
  * @return {promise}         Returns either an Error or a Success message.
  */
 function createOffer (payload) {
+  console.log('Got payload:')
+  console.log(payload)
   return fetch(`${TIM_API_ROOT}/offers/`, {
     method: 'POST',
     body: JSON.stringify(payload),
