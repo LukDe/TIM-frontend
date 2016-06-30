@@ -13,6 +13,7 @@ import 'react-redux-toastr/src/less/index.less'
 import './semantic/dist/semantic.min.css'
 import './semantic/dist/semantic.min.js'
 import './semantic/dist/components/dropdown.min.js'
+import './semantic/dist/components/modal.min.js'
 
 const store = configureStore()
 

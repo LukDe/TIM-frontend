@@ -54,18 +54,18 @@ class LoginPage extends Component {
           <form id="login-form" className="ui large form" >
             <div className="ui stacked segment">
               <div className="field">
-              	<div className="ui left icon input">
-              		<i className="user icon"></i>
-              		<input onChange={this.handleChange('mobile')}
-                		type="text" name="mobile" placeholder="Handynummer" />
-              	</div>
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
+                  <input onChange={this.handleChange('mobile')}
+                    type="text" name="mobile" placeholder="Handynummer" />
+                </div>
               </div>
               <div className="field">
-              	<div className="ui left icon input">
-              		<i className="user icon"></i>
-              		<input onChange={this.handleChange('postalCode')}
-              			type="text" name="postalCode" placeholder="PLZ" />
-              	</div>
+                <div className="ui left icon input">
+                  <i className="user icon"></i>
+                  <input onChange={this.handleChange('postalCode')}
+                    type="text" name="postalCode" placeholder="PLZ" />
+                </div>
               </div>
               <div className="field">
                 <div className="ui left icon input">

@@ -1,15 +1,11 @@
 export const offerValidation = {
   fields: {
-    postalCode: {
-      identifier: 'postalCode',
+    location: {
+      identifier: 'location',
       rules: [
         {
           type: 'empty',
-          prompt: 'Bitte geben sie eine Postleitzahl an.'
-        },
-        {
-          type: 'integer[1..99999]',
-          prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
+          prompt: 'Bitte geben Sie eine gültige Adresse.'
         }
       ]
     },
@@ -29,10 +25,6 @@ export const offerValidation = {
     range: {
       identifier: 'range',
       rules: [
-        {
-          type: 'empty',
-          prompt: 'Bitte geben sie eine Umkreis an.'
-        },
         {
           type: 'integer',
           prompt: 'Bitte geben sie einen gültigen Umkreis an.'

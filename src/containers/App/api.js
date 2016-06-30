@@ -24,12 +24,45 @@ function getOffers () {
     })
 }
 
+/* ====================================================== */
+/* Google Api functions                                   */
+/* ====================================================== */
+
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyDKWmVq0-nJ5v6b-2x9jBkhgPuVarwipbA'
+
+function reverseGeocode (latitude, longitude) {
+  const reverseGeocodingUrl =
+    `https://maps.googleapis.com/maps/api/geocode/json` +
+    `?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
+
+  return fetch(reverseGeocodingUrl)
+    .then((response) => response.json())
+    .catch((error) => Promise.reject(`Error connecting to Google Api: ${error}`))
+}
+
+function geocode (address) {
+  console.log(`called with: ${address}`)
+  const geocodingUrl = 'https://maps.googleapis.com/maps/api/geocode/json' +
+                       `?address=${address}&key=${GOOGLE_MAPS_API_KEY}`
+
+  return fetch(geocodingUrl)
+    .then((response) => response.json())
+    .catch((error) => Promise.reject(`Error connecting to Google Api: ${error}`))
+
+}
+
+/* ====================================================== */
+/* TIM api functions                                      */
+/* ====================================================== */
+
+export const TIM_API_ROOT = 'http://localhost:8000/api'
+
  /**
   * Get all requests in json from the api.
   * @return {promise} Promise that resolves the JSON response.
   */
 function getRequests () {
-  return fetch(`${apiDomain}/requests/`)
+  return fetch(`${TIM_API_ROOT}/requests`)
     .then((data) => data.json())
 }
 
@@ -48,7 +81,10 @@ function userLogin (credentials) {
       'Content-Type': 'application/json'
     })
   }
-  return fetch(`${apiDomain}/login/`, options)
+  return fetch(`${TIM_API_ROOT}/login/`, options)
+    .catch((e) => {
+      Promise.reject('Error connecting to server')
+    })
     .then((response) => {
       if (response.ok) {
         return response.json()
@@ -75,7 +111,7 @@ function userLogin (credentials) {
  * @return {promise}         Returns either an Error or a Success message.
  */
 function createRequest (payload) {
-  return fetch(`${apiDomain}/requests/`, {
+  return fetch(`${TIM_API_ROOT}/requests/`, {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: new Headers({'Content-Type': 'application/json'})
@@ -88,9 +124,50 @@ function createRequest (payload) {
   })
 }
 
+/**
+ * Given the payload, creates a new offer.
+ * @param  {object}  payload Information about the new offer.
+ * @return {promise}         Returns either an Error or a Success message.
+ */
+function createOffer (payload) {
+  console.log('Got payload:')
+  console.log(payload)
+  return fetch(`${TIM_API_ROOT}/offers/`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: new Headers({'Content-Type': 'application/json'})
+  }).then((response) => {
+    if (response.ok) {
+      return Promise.resolve('Offer created successfully')
+    } else {
+      return Promise.reject('Error while creating the offer')
+    }
+  })
+}
+
+function getVerificationCode (payload) {
+
+   return fetch('http://localhost:8000/api/verification/', {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: new Headers({'Content-Type': 'application/json'})
+    }).then(response => response.json())
+      .then(json => {
+        console.log(json) // what i got from the backend
+        return json
+    })
+
+}
+
 export default {
+  // Tim Api
   getRequests,
   userLogin,
   createRequest,
-  getOffers
+  getOffers,
+  createOffer,
+  getVerificationCode,
+  // Google Api
+  geocode,
+  reverseGeocode
 }

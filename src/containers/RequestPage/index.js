@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
+import SelectStreetModal from '../../components/SelectStreetModal'
 import * as AC from '../../actions/request'
 import { requestValidation } from './validation'
+import Api from '../App/api'
 
 class RequestPage extends Component {
   constructor (props) {
@@ -13,10 +15,18 @@ class RequestPage extends Component {
       username: this.props.userData,
       goodName: '',
       misc: '',
+      active: true,
       quantity: '-1',
       range: '',
       postalCode: '',
       priority: '',
+      address: {
+        name: '',
+        coords: {
+          latitude: '',
+          longitude: ''
+        }
+      },
       labelText: "Wie viel Liter Wasser brauchen Sie?",
       placeholderText: "Liter",
       miscHidden: true
@@ -40,37 +50,82 @@ class RequestPage extends Component {
     }
   }
 
+  handleAddress (address) {
+    this.setState({ // eslint-disable-line
+      address: {
+        name: address.formatted_address,
+        coords: {
+          latitude: address.geometry.location.lat,
+          longitude: address.geometry.location.lng
+        }
+      }
+    })
+    $('#select-street-modal').modal('hide')
+  }
+
+  handleGps (selection) {
+    return (event) => {
+      event.preventDefault()
+      switch (selection) {
+        case 'MAP':
+          $('#select-street-modal').modal('show')
+          break
+
+        case 'AUTOMATIC':
+          if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const { latitude, longitude } = position.coords
+              Api.reverseGeocode(latitude, longitude)
+                .then((json) => {
+                  this.setState({ // eslint-disable-line
+                    address: {
+                      name: json.results[0].formatted_address,
+                      coords: { latitude, longitude }
+                    }
+                  })
+                })
+            })
+          } else {
+            console.err('Browser does not support the geolocation functionality')
+          }
+          break
+      }
+    }
+  }
+
   labelUpdater (cat) {
     switch (cat) {
       case "water":
         return (event) => {
-            this.setState({labelText: 'Wie viel Liter Wasser brauchen Sie?', placeholderText: 'Liter', miscHidden: true}) // eslint-disable-line
+          this.setState({labelText: 'Wie viel Liter Wasser brauchen Sie?', placeholderText: 'Liter', miscHidden: true}) // eslint-disable-line
         }
       case "food":
         return (event) => {
-            this.setState({labelText: 'Wie viele Mahlzeiten brauchen Sie?', placeholderText: 'Mahlzeiten', miscHidden: true}) // eslint-disable-line
+          this.setState({labelText: 'Wie viele Mahlzeiten brauchen Sie?', placeholderText: 'Mahlzeiten', miscHidden: true}) // eslint-disable-line
         }
       case "woundcare":
         return (event) => {
-            this.setState({labelText: 'Wie viele Verbandskästen brauchen Sie?', placeholderText: 'Verbandskästen', miscHidden: true}) // eslint-disable-line
+          this.setState({labelText: 'Wie viele Verbandskästen brauchen Sie?', placeholderText: 'Verbandskästen', miscHidden: true}) // eslint-disable-line
         }
       case "clothes":
         return (event) => {
-            this.setState({labelText: 'Wie viele Kleidungen brauchen Sie?', placeholderText: 'Anzahl', miscHidden: true}) // eslint-disable-line
+          this.setState({labelText: 'Wie viele Kleidungen brauchen Sie?', placeholderText: 'Anzahl', miscHidden: true}) // eslint-disable-line
         }
       case "accomodation":
         return (event) => {
-            this.setState({labelText: 'Wie viele Personen brauchen Unterkunft?', placeholderText: 'Personen', miscHidden: true}) // eslint-disable-line
+          this.setState({labelText: 'Wie viele Personen brauchen Unterkunft?', placeholderText: 'Personen', miscHidden: true}) // eslint-disable-line
         }
       case "other":
         return (event) => {
-            this.setState({miscHidden: false}) // eslint-disable-line
+          this.setState({miscHidden: false}) // eslint-disable-line
         }
       default:
     }
   }
   render () {
     return (
+      <div>
+        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
         <form id="offer-form" className="ui form">
           <div className="fields">
             <label>Was brauchen Sie?</label>
@@ -135,10 +190,14 @@ class RequestPage extends Component {
             : ''
           }
 
-          <div className="field">
+          <div className="ui action field">
             <label>Wo?</label>
-            <input onChange={this.handleChange('postalCode')}
-                   type="text" name="postalCode" placeholder="Postleitzahl"/>
+            <input type="text" name="location" value={this.state.address.name}/>
+            <div className="ui buttons">
+              <button onClick={this.handleGps('MAP')} className="ui button">Straße</button>
+              <div className="or" data-text="or"></div>
+              <button onClick={this.handleGps('AUTOMATIC')} className="ui positive button">Automatisch</button>
+            </div>
           </div>
 
           <div className="field">
@@ -173,7 +232,9 @@ class RequestPage extends Component {
             </div>
           <button className="ui button" type="submit">Abschicken</button>
           <div className="ui error message"></div>
-        </form>)
+        </form>
+      </div>
+    )
   }
 }
 
@@ -191,7 +252,7 @@ const mapDispatchToProps = (dispatch) => ({
       misc: state.misc,
       quantity: state.quantity,
       range: state.range,
-      postalCode: state.postalCode,
+      location: `${state.address.coords.latitude},${state.address.coords.longitude}`,
       priority: state.priority
     }
     dispatch(AC.requestNew(payload))

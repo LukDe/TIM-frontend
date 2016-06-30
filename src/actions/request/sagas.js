@@ -13,7 +13,6 @@ export function * newRequest (action) {
     yield put(AC.requestNewPending())
     const msg = yield call(Api.createRequest, action.payload)
     yield call(toastr.success, msg)
-    console.log(browserHistory)
     yield put(navbarSelect('RANKING'))
     yield call(browserHistory.push, '/')
   } catch (reason) {

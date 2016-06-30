@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
-import { navbarSelect } from '../../actions/navbar'
+import SelectStreetModal from '../../components/SelectStreetModal'
 import { offerValidation } from './validation'
+import Api from '../../containers/App/api'
+import * as AC from '../../actions/offer'
 
 class OfferPage extends Component {
   constructor (props) {
@@ -13,10 +14,16 @@ class OfferPage extends Component {
     this.state = {
       username: this.props.userData,
       goodName: '',
-      misc: '',
+      active: true,
       quantity: '',
       range: '',
-      postalCode: '',
+      address: {
+        name: '',
+        coords: {
+          latitude: '',
+          longitude: ''
+        }
+      },
       labelText: 'Wie viel Liter Wasser bieten Sie an?',
       placeholderText: "Liter"
     }
@@ -39,35 +46,85 @@ class OfferPage extends Component {
     }
   }
 
-  labelUpdater (cat) {
-    switch (cat) {
-      case "water":
-        return (event) => {
-          this.setState({labelText : 'Wie viel Liter Wasser bieten Sie an?', placeholderText : 'Liter'}) // eslint-disable-line
+  handleAddress (address) {
+    this.setState({ // eslint-disable-line
+      address: {
+        name: address.formatted_address,
+        coords: {
+          latitude: address.geometry.location.lat,
+          longitude: address.geometry.location.lng
         }
-      case "food":
-        return (event) => {
-          this.setState({labelText : 'Wie viele Mahlzeiten bieten Sie an?', placeholderText : 'Mahlzeiten'}) // eslint-disable-line
-        }
-      case "woundcare":
-        return (event) => {
-          this.setState({labelText : 'Wie viele Verbandskästen bieten Sie an?', placeholderText : 'Verbandskästen'}) // eslint-disable-line
-        }
-      case "clothes":
-        return (event) => {
-          this.setState({labelText : 'Wie viele Kleidungen bieten Sie an?', placeholderText : 'Anzahl'}) // eslint-disable-line
-        }
-      case "accomodation":
-        return (event) => {
-          this.setState({labelText : 'Für wie viele Personen bieten Sie Unterkunft an?', placeholderText : 'Personen'}) // eslint-disable-line
-        }
-      default:
+      }
+    })
+    $('#select-street-modal').modal('hide')
+  }
+
+  handleGps (selection) {
+    return (event) => {
+      event.preventDefault()
+      switch (selection) {
+        case 'MAP':
+          $('#select-street-modal').modal('show')
+          break
+
+        case 'AUTOMATIC':
+          if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const { latitude, longitude } = position.coords
+              Api.reverseGeocode(latitude, longitude)
+                .then((json) => {
+                  this.setState({ // eslint-disable-line
+                    address: {
+                      name: json.results[0].formatted_address,
+                      coords: { latitude, longitude }
+                    }
+                  })
+                })
+            })
+          } else {
+            console.err('Browser does not support the geolocation functionality')
+          }
+          break
+      }
     }
   }
+
+  labelUpdater (cat) {
+    switch (cat) {
+      case 'water':
+        return (event) => this.setState({ // eslint-disable-line
+          labelText: 'Wie viel Liter Wasser bieten Sie an?',
+          placeholderText: 'Liter'
+        })
+      case 'food':
+        return (event) => this.setState({ // eslint-disable-line
+          labelText: 'Wie viele Mahlzeiten bieten Sie an?',
+          placeholderText: 'Mahlzeiten'
+        })
+      case 'woundcare':
+        return (event) => this.setState({ // eslint-disable-line
+          labelText: 'Wie viele Verbandskästen bieten Sie an?',
+          placeholderText: 'Verbandskästen'
+        })
+      case 'clothes':
+        return (event) => this.setState({ // eslint-disable-line
+          labelText: 'Wie viele Kleidungen bieten Sie an?',
+          placeholderText: 'Anzahl'
+        })
+      case 'accomodation':
+        return (event) => this.setState({ // eslint-disable-line
+          labelText: 'Für wie viele Personen bieten Sie Unterkunft an?',
+          placeholderText: 'Personen'
+        })
+    }
+  }
+
   render () {
     return (
+      <div>
+        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
         <form id="offer-form" className="ui form">
-                    <div className="fields">
+          <div className="fields">
             <label>Was wollen Sie anbieten?</label>
             <div className="field">
               <div className="ui radio checkbox">
@@ -110,10 +167,14 @@ class OfferPage extends Component {
             <input onChange={this.handleChange('quantity')}
                    type="text" name="quantity" placeholder={this.state.placeholderText}/>
           </div>
-          <div className="field">
+          <div className="ui action field">
             <label>Wo?</label>
-            <input onChange={this.handleChange('postalCode')}
-                   type="text" name="postalCode" placeholder="Postleitzahl"/>
+            <input type="text" name="location" value={this.state.address.name}/>
+            <div className="ui buttons">
+              <button onClick={this.handleGps('MAP')} className="ui button">Straße</button>
+              <div className="or" data-text="or"></div>
+              <button onClick={this.handleGps('AUTOMATIC')} className="ui positive button">Automatisch</button>
+            </div>
           </div>
           <div className="field">
             <label>In welchem Umkreis?</label>
@@ -122,7 +183,9 @@ class OfferPage extends Component {
           </div>
           <button className="ui button" type="submit">Abschicken</button>
           <div className="ui error message"></div>
-        </form>)
+        </form>
+      </div>
+    )
   }
 
 }
@@ -138,26 +201,18 @@ const mapDispatchToProps = (dispatch) => ({
     const payload = {
       username: state.username,
       goodName: state.goodName,
-      misc: state.misc,
       quantity: state.quantity,
       range: state.range,
-      postalCode: state.postalCode,
-      priority: state.priority
+      location: `${state.address.coords.latitude},${state.address.coords.longitude}`
     }
     console.log(payload)
-    fetch('http://localhost:8000/api/offers/', {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: new Headers({'Content-Type': 'application/json'})
-    })
-    browserHistory.push('/')
-    dispatch(navbarSelect('RANKING'))
+    dispatch(AC.offerNew(payload))
   }
 })
 
 const mapStateToProps = (state) => ({
   isLoggedIn: Boolean(R.path(['global', 'user', 'data'], state)),
-  userData: R.path(['global', 'user', 'data', 'userame'], state)
+  userData: R.path(['global', 'user', 'data', 'username'], state)
 })
 
 export default connect(

@@ -9,19 +9,6 @@ export const registerValidation = {
         }
       ]
     },
-    postalCode: {
-      identifier: 'postalCode',
-      rules: [
-        {
-          type: 'empty',
-          prompt: 'Bitte geben sie eine Postleitzahl an.'
-        },
-        {
-          type: 'integer[1..99999]',
-          prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
-        }
-      ]
-    },
     password: {
       identifier: 'password',
       rules: [
@@ -31,8 +18,8 @@ export const registerValidation = {
         }
       ]
     },
-    mobile: {
-      identifier: 'mobile',
+    phoneNr: {
+      identifier: 'phoneNr',
       rules: [
         {
           type: 'empty',

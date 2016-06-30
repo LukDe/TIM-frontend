@@ -6,6 +6,10 @@ import * as AC from './index'
 import * as Types from '../../constants/offer'
 import Api from '../../containers/App/api'
 
+import { browserHistory } from 'react-router'
+import { takeLatest } from 'redux-saga'
+import { navbarSelect } from '../navbar'
+
 export function * fetchOffers () {
   try {
     yield put(AC.offersFetchPending())
@@ -24,4 +28,20 @@ export function * fetchOffers () {
 
 export function * fetchOffersSaga () {
   yield * takeEvery(Types.OFFERS_FETCH, fetchOffers)
+}
+
+export function * newOffer (action) {
+  try {
+    yield put(AC.offerNewPending())
+    const msg = yield call(Api.createOffer, action.payload)
+    yield call(toastr.success, msg)
+    yield put(navbarSelect('RANKING'))
+    yield call(browserHistory.push, '/')
+  } catch (reason) {
+    yield call(toastr.error, reason)
+  }
+}
+
+export function * newOfferSaga () {
+  yield * takeLatest(Types.OFFER_NEW, newOffer)
 }
