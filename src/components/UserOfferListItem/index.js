@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 
-function UserRequestListItem (props) {
+function UserOfferListItem (props) {
   const {
     username,
     misc,
@@ -25,7 +25,7 @@ function UserRequestListItem (props) {
       {imgs[goodName]}
       <div className="content">
         <div className="header">{username}</div>
-        <div className="meta">{catastrophe} | {goodName}| {creationDate.toLocaleDateString()} | {postalCode} | <Link to="/userEditRequest" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button className="ui icon button"><i className="ban icon"></i></button></div>
+        <div className="meta">{catastrophe} | {goodName}| {creationDate.toLocaleDateString()} | {postalCode} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button className="ui icon button"><i className="ban icon"></i></button></div>
         <div className="description">
           {misc === 'NULL' ? '' : misc}
         </div>
@@ -35,11 +35,11 @@ function UserRequestListItem (props) {
     </div>
 
 
-)
+  )
 }
 
 
-UserRequestListItem.propTypes = {
+UserOfferListItem.propTypes = {
   misc: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   goodName: PropTypes.string.isRequired,
@@ -49,4 +49,4 @@ UserRequestListItem.propTypes = {
 }
 
 
-export default UserRequestListItem
+export default UserOfferListItem

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import UserRequests from './../UserRequests'
+import UserOffers from './../UserOffers'
 import Footer from './../Footer'
 import { GLOBAL_FETCH_REQUESTS } from '../../constants/global'
 
@@ -17,8 +18,10 @@ class UserListsPage extends Component {
   render () {
     return (
       <div className="ui container home-page-top-spacing">
-        <h2 className="ui dividing header">Requests</h2>
+        <h2 className="ui dividing header">Meine Gesuche</h2>
         <UserRequests />
+        <h2 className="ui dividing header">Meine Angebote</h2>
+        <UserOffers />
         <Footer />
       </div>
     )

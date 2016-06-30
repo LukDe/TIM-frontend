@@ -26,13 +26,16 @@ export function * userLogin (action) {
   try {
     yield put(AC.userLoginPending())
     const userData = yield call(Api.userLogin, action.credentials)
-    yield put(AC.userLoginSuccess(userData))
-    // Success toastr if everything went ok.
-    yield call(toastr.success, 'Login Successful!')
+    if (userData.error) {
+      yield put(AC.userLoginFail(userData.error))
+      yield call(toastr.error, userData.error)
+    } else {
+      yield put(AC.userLoginSuccess(userData))
+      yield call(toastr.success, 'Login Successful!')
+    }
   } catch (reason) {
-    yield put(AC.userLoginFail(reason))
-    // Error toastr on error.
-    yield call(toastr.error, reason)
+    yield call(toastr.error, 'Error connecting to server')
+    yield put(AC.userLoginFail('Error connecting to server'))
   }
 }
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import MainCategories from '../../components/MainCategories'
 import OtherCategories from './../OtherCategories'
 import { GLOBAL_FETCH_REQUESTS } from '../../constants/global'
+import { OFFERS_FETCH } from '../../constants/offer'
 import CircleSearch from '../../components/CircleSearch'
 import './styles.css'
 
@@ -12,6 +13,8 @@ class HomePage extends Component {
   // so it can be later rendered.
   componentWillMount () {
     this.props.dispatch({ type: GLOBAL_FETCH_REQUESTS })
+    this.props.dispatch({ type: OFFERS_FETCH })
+
   }
 
   render () {

@@ -11,6 +11,7 @@ import NotFoundPage from './components/NotFoundPage'
 import ImpressumPage from './components/ImpressumPage'
 import UserPage from './containers/UserPage'
 import UserListsPage from './containers/UserListsPage'
+import UserEditRequest from './containers/UserEditRequest'
 import { navbarSelect } from './actions/navbar'
 
 export default function RouteWithStore (store) {
@@ -53,6 +54,7 @@ export default function RouteWithStore (store) {
         <Route path="offer" component={OfferPage}/>
         <Route path="user" component={UserPage}/>
         <Route path="userLists" component={UserListsPage}/>
+        <Route path="userEditRequest" component={UserEditRequest}/>
       </Route>
 
       <Route path="login" component={LoginPage} onEnter={redirectIfLogged}/>

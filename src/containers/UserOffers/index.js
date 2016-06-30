@@ -1,30 +1,30 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
-import OthersList from '../../components/OthersList'
+import UserOfferList from '../../components/UserOfferList'
 
-const OtherCategories = ({ requests, isFetching, fetchError }) => {
+const UserOffers = ({ offers, isFetching, fetchError }) => {
   let content
   if (isFetching) {
     content = (<i className="notched circle loading icon"></i>)
   } else if (fetchError) {
-    content = (<h3>Error while loading the requests :(</h3>)
+    content = (<h3>Error while loading the offers :(</h3>)
   } else {
-    content = (<OthersList requests={requests} />)
+    content = (<UserOfferList offers={offers} />)
   }
   return (<div>{content}</div>)
 }
 
-OtherCategories.propTypes = {
-  requests: PropTypes.array,
+UserOffers.propTypes = {
+  offers: PropTypes.array,
   isFetching: PropTypes.bool.isRequired,
   fetchError: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
-  requests: R.path(['global', 'requests', 'data'], state),
-  isFetching: R.path(['global', 'requests', 'isFetching'], state),
-  fetchError: R.path(['global', 'requests', 'error'], state)
+  offers: R.path(['offer', 'data'], state),
+  isFetching: R.path(['offer', 'isFetching'], state),
+  fetchError: R.path(['offer', 'error'], state)
 })
 
-export default connect(mapStateToProps, null)(OtherCategories)
+export default connect(mapStateToProps, null)(UserOffers)
