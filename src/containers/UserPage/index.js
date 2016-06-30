@@ -14,7 +14,7 @@ class UserPage extends Component {
       password: this.props.userPass,
       mobile: this.props.userTel,
       email: this.props.userMail,
-      postalCode: this.props.userPostal,
+      postalCode: "Work in Progress",
       labelText: this.props.userData,
     }
   }
@@ -63,7 +63,7 @@ class UserPage extends Component {
         </div>
 
         <div className="field">
-          <label>Postleitzahl</label>
+          <label>Adresse</label>
           <input onChange={this.handleChange('postalCode')}
                  type="text" name="postalCode" value={this.state.postalCode} />
         </div>
@@ -85,10 +85,17 @@ UserPage.propTypes = {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onSub (payload) {
+  onSub (state) {
+    const payload = {
+        username: state.username,
+        password: state.password,
+        phoneNr: state.mobile,
+        email: state.email,
+        location: state.postalCode
+    }
     console.log(payload)
-    fetch('http://localhost:8000/api/users/', {
-      method: "POST",
+    fetch('http://localhost:8000/api/users/'+state.username, {
+      method: "PUT",
       body: JSON.stringify(payload),
       headers: new Headers({'Content-Type': 'application/json'})
     })
@@ -100,9 +107,9 @@ const mapStateToProps = (state) => ({
   isLoggedIn: Boolean(R.path(['global', 'user', 'data'], state)),
   userData: R.path(['global', 'user', 'data', 'username'], state),
   userPass: R.path(['global', 'user', 'data', 'password'], state),
-  userTel: R.path(['global', 'user', 'data', 'mobile'], state),
+  userTel: R.path(['global', 'user', 'data', 'phoneNr'], state),
   userMail: R.path(['global', 'user', 'data', 'email'], state),
-  userPostal: R.path(['global', 'user', 'data', 'postalCode'], state)
+  userPostal: R.path(['global', 'user', 'data', 'address'], state)
 })
 
 export default connect(
