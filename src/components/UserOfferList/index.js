@@ -12,11 +12,10 @@ function UserOfferList (props) {
           (<UserOfferListItem
             key={req.id}
             username={req.username}
-            catastrophe={req.catastrophy}
             creationDate={new Date(req.creationDate)}
             goodName={req.goodName}
-            postalCode={req.postalCode}
-            misc={req.misc}/>))}
+            misc={req.misc}
+            offerID={req.id}/>))}
     </div>
   )
 }

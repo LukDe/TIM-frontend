@@ -12,11 +12,10 @@ function UserRequestList (props) {
           (<UserRequestListItem
             key={req.id}
             username={req.username}
-            catastrophe={req.catastrophy}
             creationDate={new Date(req.creationDate)}
             goodName={req.goodName}
-            postalCode={req.postalCode}
-            misc={req.misc}/>))}
+            misc={req.misc}
+            requestID={req.id}/>))}
     </div>
   )
 }

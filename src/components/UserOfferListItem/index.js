@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import functions from '../../utils/functions'
 
 function UserOfferListItem (props) {
   const {
+    offerID,
     username,
     misc,
     goodName,
@@ -20,12 +22,13 @@ function UserOfferListItem (props) {
     accomodation: (<img className="ui avatar image" src={require('../../img/accomodation.svg')} alt="accomodation"/>),
     woundcare: (<img className="ui avatar image" src={require('../../img/woundcare.svg')} alt="woundcare"/>)
   }
+
   return (
     <div className="item">
       {imgs[goodName]}
       <div className="content">
         <div className="header">{username}</div>
-        <div className="meta">{catastrophe} | {goodName}| {creationDate.toLocaleDateString()} | {postalCode} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button className="ui icon button"><i className="ban icon"></i></button></div>
+        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteOffer.bind(null,offerID)} className="ui icon button" ><i className="ban icon"></i></button></div>
         <div className="description">
           {misc === 'NULL' ? '' : misc}
         </div>
@@ -39,13 +42,13 @@ function UserOfferListItem (props) {
 }
 
 
+
 UserOfferListItem.propTypes = {
+  offerID: PropTypes.number.isRequired,
   misc: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   goodName: PropTypes.string.isRequired,
-  creationDate: PropTypes.object.isRequired,
-  postalCode: PropTypes.string.isRequired,
-  catastrophe: PropTypes.string.isRequired
+  creationDate: PropTypes.object.isRequired
 }
 
 
