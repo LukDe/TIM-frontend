@@ -121,12 +121,27 @@ function createOffer (payload) {
   })
 }
 
+function getVerificationCode (payload) {
+
+   return fetch('http://localhost:8000/api/verification/', {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: new Headers({'Content-Type': 'application/json'})
+    }).then(response => response.json())
+      .then(json => {
+        console.log(json) // what i got from the backend
+        return json
+    })
+
+}
+
 export default {
   // Tim Api
   getRequests,
   userLogin,
   createRequest,
   createOffer,
+  getVerificationCode,
   // Google Api
   geocode,
   reverseGeocode

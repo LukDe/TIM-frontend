@@ -9,19 +9,6 @@ export const registerValidation = {
         }
       ]
     },
-    location: {
-      identifier: 'location',
-      rules: [
-        {
-          type: 'empty',
-          prompt: 'Bitte geben sie eine Postleitzahl an.'
-        },
-        {
-          type: 'integer[1..99999]',
-          prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
-        }
-      ]
-    },
     password: {
       identifier: 'password',
       rules: [
