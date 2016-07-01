@@ -25,7 +25,8 @@ class OfferPage extends Component {
         }
       },
       labelText: 'Wie viel Liter Wasser bieten Sie an?',
-      placeholderText: "Liter"
+      placeholderText: "Liter",
+      showModal: false
     }
   }
 
@@ -54,9 +55,9 @@ class OfferPage extends Component {
           latitude: address.geometry.location.lat,
           longitude: address.geometry.location.lng
         }
-      }
+      },
+      showModal: false
     })
-    $('#select-street-modal').modal('hide')
   }
 
   handleGps (selection) {
@@ -64,7 +65,7 @@ class OfferPage extends Component {
       event.preventDefault()
       switch (selection) {
         case 'MAP':
-          $('#select-street-modal').modal('show')
+          this.setState({ showModal: true }) // eslint-disable-line
           break
 
         case 'AUTOMATIC':
@@ -119,10 +120,17 @@ class OfferPage extends Component {
     }
   }
 
+  closeModal () {
+    this.setState({ showModal: false }) // eslint-disable-line
+  }
+
   render () {
     return (
       <div>
-        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
+        {this.state.showModal
+          ? (<SelectStreetModal onClick={this.handleAddress.bind(this)}
+                                onLeave={this.closeModal.bind(this)} />)
+          : ''}
         <form id="offer-form" className="ui form">
           <div className="fields">
             <label>Was wollen Sie anbieten?</label>
@@ -205,7 +213,7 @@ const mapDispatchToProps = (dispatch) => ({
       range: state.range,
       location: `${state.address.coords.latitude},${state.address.coords.longitude}`
     }
-    console.log(payload)
+    $('#app').removeAttr('class')
     dispatch(AC.offerNew(payload))
   }
 })

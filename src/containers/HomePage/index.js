@@ -12,6 +12,7 @@ class HomePage extends Component {
   // so it can be later rendered.
   componentWillMount () {
     this.props.dispatch({ type: GLOBAL_FETCH_REQUESTS })
+    $('#app').addClass('disabled')
   }
 
   render () {

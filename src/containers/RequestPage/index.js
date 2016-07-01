@@ -29,7 +29,8 @@ class RequestPage extends Component {
       },
       labelText: "Wie viel Liter Wasser brauchen Sie?",
       placeholderText: "Liter",
-      miscHidden: true
+      miscHidden: true,
+      showModal: false
     }
   }
 
@@ -58,9 +59,9 @@ class RequestPage extends Component {
           latitude: address.geometry.location.lat,
           longitude: address.geometry.location.lng
         }
-      }
+      },
+      showModal: false
     })
-    $('#select-street-modal').modal('hide')
   }
 
   handleGps (selection) {
@@ -68,7 +69,7 @@ class RequestPage extends Component {
       event.preventDefault()
       switch (selection) {
         case 'MAP':
-          $('#select-street-modal').modal('show')
+          this.setState({ showModal: true }) // eslint-disable-line
           break
 
         case 'AUTOMATIC':
@@ -122,10 +123,18 @@ class RequestPage extends Component {
       default:
     }
   }
+
+  closeModal () {
+    this.setState({ showModal: false }) // eslint-disable-line
+  }
+
   render () {
     return (
       <div>
-        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
+        {this.state.showModal
+          ? (<SelectStreetModal onClick={this.handleAddress.bind(this)}
+                                onLeave={this.closeModal.bind(this)} />)
+          : ''}
         <form id="offer-form" className="ui form">
           <div className="fields">
             <label>Was brauchen Sie?</label>

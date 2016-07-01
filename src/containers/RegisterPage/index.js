@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import R from 'ramda'
 
 import SelectStreetModal from '../../components/SelectStreetModal'
-import { navbarSelect } from '../../actions/navbar'
 import { registerValidation } from './validation'
 import Api from '../App/api'
 
@@ -151,16 +150,18 @@ const mapDispatchToProps = (dispatch) => ({
     const payload = {
       phoneNr: state.phoneNr
     }
-    Api.getVerificationCode(payload).then(json => state.verification = json.verification)
+    Api.getVerificationCode(payload).then((json) => {
+      state.verification = json.verification
+    })
     $('#verification-modal').modal('show')
   },
   onVer (state) {
-    if ( state.verification == state.entered_verification ) {
+    if (state.verification === state.entered_verification) {
       const payload = {
         username: state.username,
         password: state.password,
         phoneNr: state.phoneNr,
-        location: `${state.address.coords.latitude},${state.address.coords.longitude}`,
+        location: `${state.address.coords.latitude},${state.address.coords.longitude}`
       }
       fetch('http://localhost:8000/api/users/', {
         method: "POST",
