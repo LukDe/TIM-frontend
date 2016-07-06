@@ -5,6 +5,24 @@
  * This file declares all of the functions that talk directly to the api.
  * All of these functions are assumed to return a promise with the response.
  */
+const apiDomain = 'http://localhost:8000/api'
+
+/**
+ * Get all the offers from the server.
+ * @return {promise}       Promise of the result
+ */
+function getOffers () {
+  return fetch(`${apiDomain}/offers/`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else if (response.status === 404) {
+        return Promise.reject({ error: 'Offers not found' })
+      } else {
+        return Promise.reject({ error: 'Unknown error on the server' })
+      }
+    })
+}
 
 /* ====================================================== */
 /* Google Api functions                                   */
@@ -71,12 +89,18 @@ function userLogin (credentials) {
       if (response.ok) {
         return response.json()
       } else if (response.status === 404) {
-        return Promise.reject('Username was not found')
+        return Promise.resolve({
+          error: 'Username was not found'
+        })
       } else if (response.status === 400) {
-        return Promise.reject('Wrong password')
+        return Promise.resolve({
+          error: 'Wrong password'
+        })
       } else {
         console.log(response.status)
-        return Promise.reject('Unknown error on the server')
+        return Promise.reject({
+          error: 'Unknown error on the server'
+        })
       }
     })
 }
@@ -140,6 +164,7 @@ export default {
   getRequests,
   userLogin,
   createRequest,
+  getOffers,
   createOffer,
   getVerificationCode,
   // Google Api

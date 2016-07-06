@@ -24,7 +24,8 @@ class Navbar extends Component {
            <i className="user icon"></i>
            {username}
            <div className="menu">
-             <a className="item">Settings</a>
+             <Link to="/userLists" onClick={() => onClick('USERLISTS')} className="item">Meine Angebote und Gesuche</Link>
+             <Link to="/user" onClick={() => onClick('USER')} className="item">Einstellungen</Link>
              <Link to="/login" onClick={() => onLogout()} className="item">Log-out</Link>
            </div>
         </div>)

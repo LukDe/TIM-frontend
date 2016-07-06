@@ -1,5 +1,6 @@
 import { userLoginSaga, fetchRequestsSaga } from './global/sagas'
 import { newRequestSaga } from './request/sagas'
+import { fetchOffersSaga } from './offer/sagas'
 import { newOfferSaga } from './offer/sagas'
 
 export default function * rootSaga () {
@@ -7,6 +8,7 @@ export default function * rootSaga () {
     userLoginSaga(),
     fetchRequestsSaga(),
     newRequestSaga(),
+    fetchOffersSaga(),
     newOfferSaga()
   ]
 }

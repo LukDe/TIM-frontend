@@ -55,6 +55,10 @@ describe('fetchRequestsSaga', function () {
     )
   })
 
+  it('handles SERVER connection issues', function () {
+
+  })
+
 })
 
 describe('userLoginSaga', function () {
@@ -110,15 +114,41 @@ describe('userLoginSaga', function () {
     )
 
     expect(
-      gen.throw('any error').value
+      gen.next({ error: 'An error' }).value
     ).to.be.eql(
-      put({ type: Types.GLOBAL_USER_LOGIN_FAIL, reason: 'any error' })
+      put({ type: Types.GLOBAL_USER_LOGIN_FAIL, reason: 'An error' })
     )
 
     expect(
       gen.next().value
     ).to.be.eql(
-      call(toastr.error, 'any error')
+      call(toastr.error, 'An error')
+    )
+  })
+
+  it('it handles connectivity issues', function () {
+    expect(
+      gen.next().value
+    ).to.be.eql(
+      put({ type: Types.GLOBAL_USER_LOGIN_PENDING })
+    )
+
+    expect(
+      gen.next().value
+    ).to.be.eql(
+      call(Api.userLogin, action.credentials)
+    )
+
+    expect(
+      gen.throw({ error: 'Connect error' }).value
+    ).to.be.eql(
+      call(toastr.error, 'Error connecting to server')
+    )
+
+    expect(
+      gen.next().value
+    ).to.be.eql(
+      put({ type: Types.GLOBAL_USER_LOGIN_FAIL, reason: 'Error connecting to server' })
     )
   })
 })
