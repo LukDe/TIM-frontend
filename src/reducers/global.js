@@ -39,7 +39,7 @@ function globalReducer (state = initialState, action) {
     case Types.GLOBAL_USER_LOGIN_SUCCESS:
       return R.pipe(
           R.assocPath(['user', 'isFetching'], false),
-          R.assocPath(['user', 'data'], action.userData),
+          R.assocPath(['user', 'data'], R.dissoc('password', action.userData)),
           R.assocPath(['user', 'error'], false)
         )(state)
 
