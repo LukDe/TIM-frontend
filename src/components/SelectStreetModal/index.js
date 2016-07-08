@@ -15,10 +15,6 @@ class SelectStreetModal extends Component {
 
   handleChange (event) {
     this.setState({ search: event.target.value }) // eslint-disable-line
-  }
-
-  handleSearch (event) {
-    event.preventDefault()
 
     Api.geocode(this.state.search)
       .then((json) => {
@@ -46,13 +42,9 @@ class SelectStreetModal extends Component {
         </div>
         <div className="content">
           <div className="description">
-            <div className="ui fluid action input">
+            <div className="ui fluid input">
               <input type="text" placeholder="Straße"
                      onChange={this.handleChange.bind(this)}/>
-              <button className="ui icon button"
-                      onClick={this.handleSearch.bind(this)}>
-                <i className="search icon" />
-              </button>
             </div>
             {
               this.state.error
