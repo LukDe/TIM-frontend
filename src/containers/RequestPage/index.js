@@ -251,7 +251,7 @@ const mapDispatchToProps = (dispatch) => ({
       goodName: state.goodName,
       misc: state.misc,
       quantity: state.quantity,
-      range: state.range,
+      radius: state.range,
       location: `${state.address.coords.latitude},${state.address.coords.longitude}`,
       priority: state.priority
     }
