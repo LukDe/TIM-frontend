@@ -22,12 +22,8 @@ export const registerValidation = {
       identifier: 'phoneNr',
       rules: [
         {
-          type: 'empty',
-          prompt: 'Bitte geben sie eine Telfonnummer an.'
-        },
-        {
-          type: 'integer',
-          prompt: 'Bitte geben sie eine gültige Telfonnummer an.'
+          type: 'regExp[/^\\+[0-9]{6,15}$/]',
+          prompt: 'Bitte geben Sie eine gültige Telefonnummer an. Z.b.: +4901234567'
         }
       ]
     }

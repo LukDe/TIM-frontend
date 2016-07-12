@@ -5,40 +5,23 @@ export const userValidation = {
       rules: [
         {
           type: 'empty',
-          prompt: 'Bitte geben sie eine Postleitzahl an.'
+          prompt: 'Bitte geben Sie eine Postleitzahl an.'
         },
         {
           type: 'integer[1..99999]',
-          prompt: 'Bitte geben sie eine gültige Postleitzahl an.'
+          prompt: 'Bitte geben Sie eine gültige Postleitzahl an.'
         }
       ]
     },
-    //  quantity: {
-    //    identifier: 'quantity',
-    //    rules: [
-    //      {
-    //        type: 'empty',
-    //        prompt: 'Bitte geben sie eine Anzahl an.'
-    //      },
-    //      {
-    //        type: 'integer',
-    //        prompt: 'Bitte geben sie eine gültige Anzahl an.'
-    //      }
-    //    ]
-    //  },
-    /*range: {
-      identifier: 'range',
+    mobile: {
+      identifier: 'mobile',
       rules: [
         {
-          type: 'empty',
-          prompt: 'Bitte geben sie eine Umkreis an.'
-        },
-        {
-          type: 'integer',
-          prompt: 'Bitte geben sie einen gültigen Umkreis an.'
+          type: 'regExp[/^\\+[0-9]{6,15}$/]',
+          prompt: 'Bitte geben Sie eine gültige Handynummer an. Z.b.: +4901234567'
         }
       ]
-    }*/
+    }
   }
 }
 

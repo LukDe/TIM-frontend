@@ -15,7 +15,7 @@ class UserPage extends Component {
       mobile: this.props.userTel,
       email: this.props.userMail,
       postalCode: "Work in Progress",
-      labelText: this.props.userData,
+      labelText: this.props.userData
     }
   }
 
@@ -35,7 +35,6 @@ class UserPage extends Component {
       this.setState({ [prop]: event.target.value }) // eslint-disable-line
     }
   }
-
 
   render (props) {
     return (
