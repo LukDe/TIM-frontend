@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import R from 'ramda'
 
 import SelectStreetModal from '../../components/SelectStreetModal'
-import { navbarSelect } from '../../actions/navbar'
+import VerificationModal from '../../components/VerificationModal'
 import { registerValidation } from './validation'
 import Api from '../App/api'
 
@@ -17,14 +17,15 @@ class RegisterPage extends Component {
       password: '',
       phoneNr: '',
       verification: '',
-      entered_verification: '',
       address: {
         name: '',
         coords: {
           latitude: '',
           longitude: ''
         }
-      }
+      },
+      showStreetModal: false,
+      showVerificationModal: false
     }
   }
 
@@ -33,12 +34,9 @@ class RegisterPage extends Component {
     $('#register-form').submit(() => {
       const isFormValid = $('#register-form').form('is valid')
       if (isFormValid) {
+        this.openModal('VERIFICATION')
         this.props.onSub(this.state)
       }
-      return false
-    })
-    $('#verification-form').submit(() => {
-      this.props.onVer(this.state)
       return false
     })
   }
@@ -51,9 +49,9 @@ class RegisterPage extends Component {
           latitude: address.geometry.location.lat,
           longitude: address.geometry.location.lng
         }
-      }
+      },
+      showStreetModal: false
     })
-    $('#select-street-modal').modal('hide')
   }
 
   handleGps (selection) {
@@ -61,7 +59,7 @@ class RegisterPage extends Component {
       event.preventDefault()
       switch (selection) {
         case 'MAP':
-          $('#select-street-modal').modal('show')
+          this.openModal('STREET')
           break
 
         case 'AUTOMATIC':
@@ -92,24 +90,35 @@ class RegisterPage extends Component {
     }
   }
 
+  openModal (name) {
+    if (name === 'STREET') {
+      this.setState({ showStreetModal: true }) // eslint-disable-line
+    } else if (name === 'VERIFICATION') {
+      this.setState({ showVerificationModal: true }) // eslint-disable-line
+    }
+  }
+
+  closeModal (name) {
+    if (name === 'STREET') {
+      this.setState({ showStreetModal: false }) // eslint-disable-line
+    } else if (name === 'VERIFICATION') {
+      this.setState({ showVerificationModal: false }) // eslint-disable-line
+    }
+  }
+
   render () {
     return (
       <div>
-        <div id="verification-modal" className="ui modal">
-          <div className="header">
-            Bitte Bestätigungscode eingeben
-          </div>
-          <div className="content">
-            <form id="verification-form" className="ui form">
-              <div className="ui fluid input">
-                <input type="text" placeholder="Bestätigungscode"
-                       onChange={this.handleChange('entered_verification')}/>
-              </div>
-              <button className="ui button" type="submit">Bestätigen</button>
-            </form>
-          </div>
-        </div>
-        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
+        {this.state.showVerificationModal
+          ? (<VerificationModal onVer={this.props.onVer(this.state)}
+                                onLeave={this.closeModal.bind(this, 'VERIFICATION')} />)
+          : ''}
+
+        {this.state.showStreetModal
+          ? (<SelectStreetModal onClick={this.handleAddress.bind(this)}
+                                onLeave={this.closeModal.bind(this, 'STREET')} />)
+          : ''}
+
         <form id="register-form" className="ui form">
           <label>Registrieren</label>
           <div className="field">
@@ -133,7 +142,7 @@ class RegisterPage extends Component {
               <button onClick={this.handleGps('AUTOMATIC')} className="ui positive button">Automatisch</button>
             </div>
           </div>
-          <button className="ui button" type="submit">Abschicken</button>
+          <button type="submit" className="ui button">Abschicken</button>
           <div className="ui error message"></div>
         </form>
       </div>
@@ -146,29 +155,32 @@ RegisterPage.propTypes = {
   onSub: PropTypes.func.isRequired,
   onVer: PropTypes.func.isRequired
 }
+
 const mapDispatchToProps = (dispatch) => ({
   onSub (state) {
     const payload = {
       phoneNr: state.phoneNr
     }
-    Api.getVerificationCode(payload).then(json => state.verification = json.verification)
-    $('#verification-modal').modal('show')
+    Api.getVerificationCode(payload).then((json) =>
+      state.verification = json.verification
+    )
   },
   onVer (state) {
-    if ( state.verification == state.entered_verification ) {
-      const payload = {
-        username: state.username,
-        password: state.password,
-        phoneNr: state.phoneNr,
-        location: `${state.address.coords.latitude},${state.address.coords.longitude}`,
+    return (enteredVerification) => {
+      if (state.verification === enteredVerification) {
+        const payload = {
+          username: state.username,
+          password: state.password,
+          phoneNr: state.phoneNr,
+          location: `${state.address.coords.latitude},${state.address.coords.longitude}`
+        }
+        fetch('http://localhost:8000/api/users/', {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: new Headers({'Content-Type': 'application/json'})
+        })
+        browserHistory.push('/login')
       }
-      fetch('http://localhost:8000/api/users/', {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: new Headers({'Content-Type': 'application/json'})
-      })
-      $('#verification-modal').modal('hide')
-      browserHistory.push('/login')
     }
   }
 })

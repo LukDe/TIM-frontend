@@ -130,8 +130,6 @@ function createRequest (payload) {
  * @return {promise}         Returns either an Error or a Success message.
  */
 function createOffer (payload) {
-  console.log('Got payload:')
-  console.log(payload)
   return fetch(`${TIM_API_ROOT}/offers/`, {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -146,17 +144,11 @@ function createOffer (payload) {
 }
 
 function getVerificationCode (payload) {
-
-   return fetch('http://localhost:8000/api/verification/', {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: new Headers({'Content-Type': 'application/json'})
-    }).then(response => response.json())
-      .then(json => {
-        console.log(json) // what i got from the backend
-        return json
-    })
-
+  return fetch('http://localhost:8000/api/verification/', {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: new Headers({'Content-Type': 'application/json'})
+  }).then((response) => response.json())
 }
 
 export default {

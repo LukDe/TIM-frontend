@@ -13,6 +13,26 @@ class SelectStreetModal extends Component {
     }
   }
 
+  componentWillMount () {
+    $('#app').removeClass('disabled')
+  }
+
+  componentDidMount () {
+    $(this.modal)
+      .modal({
+        detachable: false,
+        closable: false,
+        context: $('#app')
+      })
+      .modal('show')
+  }
+
+  componentWillUnmount () {
+    $(this.modal)
+      .modal('hide')
+    $('#app').addClass('disabled')
+  }
+
   handleChange (event) {
     this.setState({ search: event.target.value }) // eslint-disable-line
 
@@ -34,9 +54,14 @@ class SelectStreetModal extends Component {
     this.props.onClick(street)
   }
 
+  close (e) {
+    e.preventDefault()
+    this.props.onLeave()
+  }
+
   render () {
     return (
-      <div id="select-street-modal" className="ui modal">
+      <div ref={(n) => this.modal = n} className="ui modal">
         <div className="header">
           Deinen Ort auswählen
         </div>
@@ -59,7 +84,7 @@ class SelectStreetModal extends Component {
           </div>
         </div>
         <div className="actions">
-          <div className="ui black deny button">
+          <div onClick={this.close.bind(this)} className="ui black button">
             Abbrechen
           </div>
         </div>
@@ -69,7 +94,8 @@ class SelectStreetModal extends Component {
 }
 
 SelectStreetModal.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  onLeave: PropTypes.func.isRequired
 }
 
 export default SelectStreetModal

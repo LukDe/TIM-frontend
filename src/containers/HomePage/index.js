@@ -14,7 +14,7 @@ class HomePage extends Component {
   componentWillMount () {
     this.props.dispatch({ type: GLOBAL_FETCH_REQUESTS })
     this.props.dispatch({ type: OFFERS_FETCH })
-
+    $('#app').addClass('disabled')
   }
 
   render () {
