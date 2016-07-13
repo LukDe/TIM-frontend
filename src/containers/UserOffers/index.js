@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
-import UserOfferList from '../../components/UserOfferList'
+import UserOfferList from '../UserOfferList'
 
 const UserOffers = ({ offers, isFetching, fetchError }) => {
   let content

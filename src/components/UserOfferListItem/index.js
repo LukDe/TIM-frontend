@@ -9,8 +9,8 @@ function UserOfferListItem (props) {
     misc,
     goodName,
     creationDate,
-    postalCode,
-    catastrophe
+    onDelete,
+    onEdit
   } = props
 
 
@@ -23,16 +23,28 @@ function UserOfferListItem (props) {
     woundcare: (<img className="ui avatar image" src={require('../../img/woundcare.svg')} alt="woundcare"/>)
   }
 
+  const goods = {
+    water: 'Wasser',
+    food: 'Mahlzeiten',
+    clothes: 'Kleidung',
+    accomodation: 'einer Unterkunft',
+    woundcare: 'Verbandskästen'
+  }
+
   return (
     <div className="item">
       {imgs[goodName]}
       <div className="content">
-        <div className="header">{username}</div>
-        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteOffer.bind(null,offerID)} className="ui icon button" ><i className="ban icon"></i></button></div>
-        <div className="description">
-          {misc === 'NULL' ? '' : misc}
-        </div>
-        <div className="extra">
+        {goodName === 'other'
+          ? (<div className="header">{misc}</div>)
+          : (<div className="header">{goods[goodName]}</div>)}
+        <div className="meta">Anfrage vom {creationDate.toLocaleDateString()} | {" "}
+          <button className="ui blue icon button" onClick={() => onEdit(offerID)}>
+            <i className="edit icon"></i>
+          </button>
+          <button onClick={() => onDelete(offerID)} className="ui orange icon button">
+            <i className="ban icon"></i>
+          </button>
         </div>
       </div>
     </div>
