@@ -32,5 +32,7 @@ function reActivateRequest (requestID) {
 
 export default {
   deleteOffer,
-  deleteRequest
+  deleteRequest,
+  reActivateOffer,
+  reActivateRequest
 }

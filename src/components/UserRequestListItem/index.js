@@ -48,7 +48,7 @@ UserRequestListItem.propTypes = {
   username: PropTypes.string.isRequired,
   goodName: PropTypes.string.isRequired,
   creationDate: PropTypes.object.isRequired,
-  active: PropTypes.boolean.isRequired
+  active: PropTypes.bool.isRequired
 }
 
 
