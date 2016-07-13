@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
 
-import {userEditRequestValidation} from "./validation";
+import {userEditRequestValidation} from "./validation"
 
 class UserEditRequest extends Component {
   constructor (props) {
@@ -40,7 +40,6 @@ class UserEditRequest extends Component {
       this.setState({ [prop]: event.target.value }) // eslint-disable-line
     }
   }
-
 
   labelUpdater (cat) {
     switch (cat) {
@@ -180,8 +179,6 @@ class UserEditRequest extends Component {
           </div>
         </div>
 
-
-
         <button className="ui button" type="submit">Speichern</button>
         <div className="ui error message"></div>
       </form>)
@@ -197,7 +194,7 @@ UserEditRequest.propTypes = {
   quantity: PropTypes.string.isRequired,
   priority: PropTypes.string.isRequired,
   catastrophy: PropTypes.string.isRequired,
-  postalCode: PropTypes.string.isRequired,
+  postalCode: PropTypes.string.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({

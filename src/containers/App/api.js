@@ -5,24 +5,6 @@
  * This file declares all of the functions that talk directly to the api.
  * All of these functions are assumed to return a promise with the response.
  */
-const apiDomain = 'http://localhost:8000/api'
-
-/**
- * Get all the offers from the server.
- * @return {promise}       Promise of the result
- */
-function getOffers () {
-  return fetch(`${apiDomain}/offers/`)
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else if (response.status === 404) {
-        return Promise.reject({ error: 'Offers not found' })
-      } else {
-        return Promise.reject({ error: 'Unknown error on the server' })
-      }
-    })
-}
 
 /* ====================================================== */
 /* Google Api functions                                   */
@@ -62,8 +44,39 @@ export const TIM_API_ROOT = 'http://localhost:8000/api'
   * @return {promise} Promise that resolves the JSON response.
   */
 function getRequests () {
-  return fetch(`${TIM_API_ROOT}/requests`)
+  return fetch(`${TIM_API_ROOT}/requests/`)
     .then((data) => data.json())
+}
+
+/**
+ * Get all the offers from the server.
+ * @return {promise}       Promise of the result
+ */
+function getOffers () {
+  return fetch(`${TIM_API_ROOT}/offers/`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else if (response.status === 404) {
+        return Promise.reject({ error: 'Offers not found' })
+      } else {
+        return Promise.reject({ error: 'Unknown error on the server' })
+      }
+    })
+}
+
+function deleteOffer (offerID) {
+  return fetch(`${TIM_API_ROOT}/offers/${offerID}`, {
+    method: "DELETE",
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
+}
+
+function deleteRequest (requestID) {
+  return fetch(`${TIM_API_ROOT}/requests/${requestID}`, {
+    method: "DELETE",
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
 }
 
 /**
@@ -72,7 +85,6 @@ function getRequests () {
  * @param  {object} userData Relevent user data for login.
  * @return {promise}         Promise that resolves to the JSON user representation.
  */
- // FIXME:
 function userLogin (credentials) {
   const options = {
     method: 'POST',
@@ -144,11 +156,19 @@ function createOffer (payload) {
 }
 
 function getVerificationCode (payload) {
-  return fetch('http://localhost:8000/api/verification/', {
+  return fetch(`${TIM_API_ROOT}/verification/`, {
     method: "POST",
     body: JSON.stringify(payload),
     headers: new Headers({'Content-Type': 'application/json'})
   }).then((response) => response.json())
+}
+
+function createUser (payload) {
+  return fetch(`${TIM_API_ROOT}/users/`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
 }
 
 export default {
@@ -159,6 +179,9 @@ export default {
   getOffers,
   createOffer,
   getVerificationCode,
+  deleteOffer,
+  deleteRequest,
+  createUser,
   // Google Api
   geocode,
   reverseGeocode

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import functions from '../../utils/functions'
+import Api from '../../containers/App/api'
 
 function UserOfferListItem (props) {
   const {
@@ -12,7 +12,6 @@ function UserOfferListItem (props) {
     postalCode,
     catastrophe
   } = props
-
 
   const imgs = {
     other: (<img className="ui avatar image" src={require('../../img/other.svg')} alt="others"/>),
@@ -28,7 +27,7 @@ function UserOfferListItem (props) {
       {imgs[goodName]}
       <div className="content">
         <div className="header">{username}</div>
-        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteOffer.bind(null,offerID)} className="ui icon button" ><i className="ban icon"></i></button></div>
+        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/user" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={Api.deleteOffer.bind(null, offerID)} className="ui icon button" ><i className="ban icon"></i></button></div>
         <div className="description">
           {misc === 'NULL' ? '' : misc}
         </div>
@@ -36,12 +35,8 @@ function UserOfferListItem (props) {
         </div>
       </div>
     </div>
-
-
   )
 }
-
-
 
 UserOfferListItem.propTypes = {
   offerID: PropTypes.number.isRequired,
@@ -50,6 +45,5 @@ UserOfferListItem.propTypes = {
   goodName: PropTypes.string.isRequired,
   creationDate: PropTypes.object.isRequired
 }
-
 
 export default UserOfferListItem

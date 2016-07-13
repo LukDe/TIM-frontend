@@ -174,11 +174,7 @@ const mapDispatchToProps = (dispatch) => ({
           phoneNr: state.phoneNr,
           location: `${state.address.coords.latitude},${state.address.coords.longitude}`
         }
-        fetch('http://localhost:8000/api/users/', {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: new Headers({'Content-Type': 'application/json'})
-        })
+        Api.createUser(payload)
         browserHistory.push('/login')
       }
     }
