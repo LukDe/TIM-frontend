@@ -52,7 +52,6 @@ function load(reqloc,reqrad){
 	  return false;
 	}
   }
-  return true;
 }
 
 const mapStateToProps = (state) => ({
