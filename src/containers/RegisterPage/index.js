@@ -174,7 +174,7 @@ const mapDispatchToProps = (dispatch) => ({
           phoneNr: state.phoneNr,
           location: `${state.address.coords.latitude},${state.address.coords.longitude}`
         }
-        fetch('http://localhost:8000/api/users/', {
+        fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/users/', {
           method: "POST",
           body: JSON.stringify(payload),
           headers: new Headers({'Content-Type': 'application/json'})

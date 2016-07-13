@@ -204,7 +204,7 @@ const mapDispatchToProps = (dispatch) => ({
   onSub (payload) {
     console.log(payload)
     fetch('http://localhost:8000/api/requests/', {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(payload),
       headers: new Headers({'Content-Type': 'application/json'})
     })

@@ -24,10 +24,6 @@ export const registerValidation = {
         {
           type: 'empty',
           prompt: 'Bitte geben sie eine Telfonnummer an.'
-        },
-        {
-          type: 'integer',
-          prompt: 'Bitte geben sie eine gültige Telfonnummer an.'
         }
       ]
     }
