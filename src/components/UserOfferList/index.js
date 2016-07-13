@@ -15,7 +15,8 @@ function UserOfferList (props) {
             creationDate={new Date(req.creationDate)}
             goodName={req.goodName}
             misc={req.misc}
-            offerID={req.id}/>))}
+          	offerID={req.id}
+          	active={req.active}/>))}
     </div>
   )
 }
