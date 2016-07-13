@@ -27,18 +27,18 @@ function OthersListItem (props) {
         <button onClick={functions.initiateContact.bind(null,requestID,offusername)} type="button">Reagieren</button>
 		<label> <output id="test"></output></label>
       </div>
-      
+
     </div>
 
   )
 }
 
 OthersListItem.propTypes = {
-  requestID: PropTypes.string.isRequired,
+  requestID: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   misc: PropTypes.string.isRequired,
   creationDate: PropTypes.object.isRequired,
-  offusername: PropTypes.string.isRequired
+  offusername: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
@@ -49,6 +49,6 @@ export default connect(
   mapStateToProps
 )(OthersListItem)
 
-      
+
 
 
