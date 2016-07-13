@@ -30,9 +30,12 @@ function UserOfferListItem (props) {
       <div className="content">
         <div className="header">{username}</div>
         <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/user" className="item">
-                              <button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteOffer.bind(null,offerID)} className="ui icon button" >
-                              <i className="ban icon"></i></button> | <button onClick={functions.reActivateOffer.bind(null,offerID)} className="ui icon button" >
-                              <i className="ban icon"></i></button></div>
+                <button className="ui icon button" >
+                  <i className="edit icon"></i>
+                </button></Link> | <button onClick={functions.deleteOffer.bind(null, offerID)} className="ui icon button" >
+                <i className="ban icon"></i></button> | <button onClick={functions.reActivateOffer.bind(null, offerID)} className="ui icon button" >
+                <i className="ban icon"></i></button>
+        </div>
         <div className="description">
           {misc === 'NULL' ? '' : misc}
         </div>
@@ -40,12 +43,8 @@ function UserOfferListItem (props) {
         </div>
       </div>
     </div>
-
-
   )
 }
-
-
 
 UserOfferListItem.propTypes = {
   offerID: PropTypes.number.isRequired,
@@ -55,6 +54,5 @@ UserOfferListItem.propTypes = {
   creationDate: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired
 }
-
 
 export default UserOfferListItem
