@@ -92,10 +92,6 @@ class UserPage extends Component {
   render (props) {
     return (
       <form id="user-form" className="ui form">
-        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
-        <div className="field">
-          <label><h2>{this.props.userData}s Daten bearbeiten</h2></label>
-        </div>
 
         <div className="field">
           <label>Passwort</label>
@@ -164,7 +160,7 @@ const mapDispatchToProps = (dispatch) => ({
         radius: state.radius
     }
     console.log(payload)
-    fetch('http://localhost:8000/api/users/'+state.username, {
+    fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/users/'+state.username, {
       method: "PUT",
       body: JSON.stringify(payload),
       headers: new Headers({'Content-Type': 'application/json'})

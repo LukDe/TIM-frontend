@@ -6,8 +6,8 @@ class CircleSearch extends React.Component {
 		return (
 			<div>
 				<p></p>
-				<input type="integer" name="radius" placeholder="Postleitzahl"/>
-				<button type="button">Suchen</button> 
+				<input type="integer" name="radius" placeholder="Radius"/>
+				<button type="button">Suchen</button>
 			</div>
 			);
 	}
