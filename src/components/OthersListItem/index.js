@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react'
+import functions from '../../utils/functions'
+import R from 'ramda'
+import { connect } from 'react-redux'
 
 function OthersListItem (props) {
   const {
+    offusername,
+    requestID,
     username,
     misc,
-    creationDate,
-    postalCode,
-    catastrophe
+    creationDate
   } = props
   return (
     <div className="item">
@@ -21,7 +24,8 @@ function OthersListItem (props) {
         </div>
       </div>
       <div className="react">
-        <button type="button">Reagieren</button>
+        <button onClick={functions.initiateContact.bind(null,requestID,offusername)} type="button">Reagieren</button>
+		<label> <output id="test"></output></label>
       </div>
 
     </div>
@@ -30,10 +34,21 @@ function OthersListItem (props) {
 }
 
 OthersListItem.propTypes = {
-  misc: PropTypes.string.isRequired,
+  requestID: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
-  goodName: PropTypes.string.isRequired,
-  creationDate: PropTypes.object.isRequired
+  misc: PropTypes.string.isRequired,
+  creationDate: PropTypes.object.isRequired,
+  offusername: PropTypes.string
 }
 
-export default OthersListItem
+const mapStateToProps = (state) => ({
+  offusername: R.path(['global', 'user', 'data', 'username'], state)
+})
+
+export default connect(
+  mapStateToProps
+)(OthersListItem)
+
+
+
+

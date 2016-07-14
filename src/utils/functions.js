@@ -14,7 +14,17 @@ function deleteRequest (requestID) {
     return
 }
 
+
+function initiateContact (offusername,requsername){
+	fetch('http://localhost:8000/api/initiateContact/'+offusername+'/'+requsername, {
+	method: "POST",
+	headers: new Headers({'Content-Type': 'application/json'})
+	})
+	return
+}
+
 export default {
   deleteOffer,
-  deleteRequest
+  deleteRequest,
+  initiateContact
 }
