@@ -6,6 +6,14 @@ function deleteOffer (offerID) {
     return
 }
 
+function reActivateOffer (offerID) {
+    fetch('http://localhost:8000/api/offers/'+offerID, {
+      method: "POST",
+      headers: new Headers({'Content-Type': 'application/json'})
+    })
+    return
+}
+
 function deleteRequest (requestID) {
     fetch('http://localhost:8000/api/requests/'+requestID, {
       method: "DELETE",
@@ -13,7 +21,6 @@ function deleteRequest (requestID) {
     })
     return
 }
-
 
 function initiateContact (offusername,requsername){
 	fetch('http://localhost:8000/api/initiateContact/'+offusername+'/'+requsername, {
@@ -23,8 +30,18 @@ function initiateContact (offusername,requsername){
 	return
 }
 
+function reActivateRequest (requestID) {
+    fetch('http://localhost:8000/api/requests/'+requestID, {
+      method: "POST",
+      headers: new Headers({'Content-Type': 'application/json'})
+    })
+    return
+}
+
 export default {
   deleteOffer,
   deleteRequest,
-  initiateContact
+  initiateContact,
+  reActivateOffer,
+  reActivateRequest
 }

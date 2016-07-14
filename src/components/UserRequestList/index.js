@@ -15,7 +15,8 @@ function UserRequestList (props) {
             creationDate={new Date(req.creationDate)}
             goodName={req.goodName}
             misc={req.misc}
-            requestID={req.id}/>))}
+            requestID={req.id}
+          	active={req.active}/>))}
     </div>
   )
 }

@@ -6,6 +6,7 @@ function UserRequestListItem (props) {
   const {
     requestID,
     username,
+    active,
     misc,
     goodName,
     creationDate,
@@ -27,7 +28,7 @@ function UserRequestListItem (props) {
       {imgs[goodName]}
       <div className="content">
         <div className="header">{username}</div>
-        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/userEditRequest" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteRequest.bind(null,requestID)} className="ui icon button"><i className="ban icon"></i></button></div>
+        <div className="meta">{goodName}| {creationDate.toLocaleDateString()} | <Link to="/userEditRequest" className="item"><button className="ui icon button" ><i className="edit icon"></i></button></Link> | <button onClick={functions.deleteRequest.bind(null,requestID)} className="ui icon button"><i className="ban icon"></i></button> | <button onClick={functions.reActivateRequest.bind(null,requestID)} className="ui icon button"><i className="ban icon"></i></button></div>
         <div className="description">
           {misc === 'NULL' ? '' : misc}
         </div>
@@ -46,7 +47,8 @@ UserRequestListItem.propTypes = {
   misc: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   goodName: PropTypes.string.isRequired,
-  creationDate: PropTypes.object.isRequired
+  creationDate: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired
 }
 
 
