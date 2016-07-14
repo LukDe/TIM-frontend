@@ -38,7 +38,7 @@ function UserOfferListItem (props) {
         {goodName === 'other'
           ? (<div className="header">{misc}</div>)
           : (<div className="header">{goods[goodName]}</div>)}
-        <div className="meta">Anfrage vom {creationDate.toLocaleDateString()} | {" "}
+        <div className="meta">Angebot vom {creationDate.toLocaleDateString()} | {" "}
           <button className="ui blue icon button" onClick={() => onEdit(offerID)}>
             <i className="edit icon"></i>
           </button>
