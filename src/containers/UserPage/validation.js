@@ -1,15 +1,28 @@
 export const userValidation = {
   fields: {
-    postalCode: {
-      identifier: 'postalCode',
+    email: {
+      identifier: 'email',
       rules: [
         {
           type: 'empty',
-          prompt: 'Bitte geben Sie eine Postleitzahl an.'
+          prompt: 'Bitte geben Sie eine E-Mailadresse an.'
         },
         {
-          type: 'integer[1..99999]',
-          prompt: 'Bitte geben Sie eine gültige Postleitzahl an.'
+          type: 'email',
+          prompt: 'Bitte geben sie eine gültige E-Mailadresse an.'
+        }
+      ]
+    },
+    radius: {
+      identifier: 'radius',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Bitte geben sie einen Bewegungsradius ein.'
+        },
+        {
+          type: 'integer',
+          prompt: 'Bitte geben sie einen gültigen Bewegungsradius an'
         }
       ]
     },
