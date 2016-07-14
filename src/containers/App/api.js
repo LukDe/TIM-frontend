@@ -5,7 +5,7 @@
  * This file declares all of the functions that talk directly to the api.
  * All of these functions are assumed to return a promise with the response.
  */
-const apiDomain = 'http://localhost:8000/api'
+const apiDomain = 'http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/'
 
 /**
  * Get all the offers from the server.
@@ -55,7 +55,7 @@ function geocode (address) {
 /* TIM api functions                                      */
 /* ====================================================== */
 
-export const TIM_API_ROOT = 'http://localhost:8000/api'
+export const TIM_API_ROOT = 'http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api'
 
  /**
   * Get all requests in json from the api.
@@ -144,7 +144,7 @@ function createOffer (payload) {
 }
 
 function getVerificationCode (payload) {
-  return fetch('http://localhost:8000/api/verification/', {
+  return fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/verification/', {
     method: "POST",
     body: JSON.stringify(payload),
     headers: new Headers({'Content-Type': 'application/json'})

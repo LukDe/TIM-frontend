@@ -1,19 +1,19 @@
 function deleteOffer (offerID) {
-  return fetch('http://localhost:8000/api/offers/' + offerID, {
+  return fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/offers/' + offerID, {
     method: 'DELETE',
     headers: new Headers({'Content-Type': 'application/json'})
   })
 }
 
 function deleteRequest (requestID) {
-  return fetch('http://localhost:8000/api/requests/' + requestID, {
+  return fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/requests/' + requestID, {
     method: 'DELETE',
     headers: new Headers({'Content-Type': 'application/json'})
   })
 }
 
 function initiateContact (offusername,requsername){
-	fetch('http://localhost:8000/api/initiateContact/'+offusername+'/'+requsername, {
+	fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/initiateContact/'+offusername+'/'+requsername, {
 	method: "POST",
 	headers: new Headers({'Content-Type': 'application/json'})
 	})
@@ -21,17 +21,25 @@ function initiateContact (offusername,requsername){
 }
 
 function reActivateRequest (requestID) {
-  return fetch(`http://localhost:8000/api/requests/${requestID}/activate`, {
+  return fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/requests/${requestID}/activate', {
     method: 'POST',
     headers: new Headers({'Content-Type': 'application/json'})
   })
 }
 
 function reActivateOffer (offerID) {
-  return fetch(`http://localhost:8000/api/offers/${offerID}/activate`, {
+  return fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/offers/${offerID}/activate', {
     method: 'POST',
     headers: new Headers({'Content-Type': 'application/json'})
   })
+}
+
+function deleteOffer (offerID) {
+  fetch('http://backend.62s4p53h4j.eu-central-1.elasticbeanstalk.com/api/offers/'+offerID, {
+    method: "DELETE",
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
+  return
 }
 
 export default {
@@ -39,5 +47,6 @@ export default {
   deleteRequest,
   initiateContact,
   reActivateOffer,
-  reActivateRequest
+  reActivateRequest,
+  deleteRequest
 }

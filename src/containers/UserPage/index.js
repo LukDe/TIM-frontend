@@ -1,7 +1,8 @@
-
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import R from 'ramda'
+import SelectStreetModal from '../../components/SelectStreetModal'
+import Api from '../../containers/App/api'
 
 import { userValidation } from './validation'
 
@@ -11,11 +12,20 @@ class UserPage extends Component {
 
     this.state = {
       username: this.props.userData,
-      password: this.props.userPass,
+      password: 'Passwort',
+      passwordTest: '',
       mobile: this.props.userTel,
       email: this.props.userMail,
-      postalCode: "Work in Progress",
-      labelText: this.props.userData
+      location: this.props.userLocation,
+      radius: this.props.userRadius,
+      labelText: this.props.userData,
+      address: {
+        name: '',
+        coords: {
+          latitude: '',
+          longitude: ''
+        }
+      }
     }
   }
 
@@ -36,17 +46,68 @@ class UserPage extends Component {
     }
   }
 
+  handleAddress (address) {
+    this.setState({ // eslint-disable-line
+      address: {
+        name: address.formatted_address,
+        coords: {
+          latitude: address.geometry.location.lat,
+          longitude: address.geometry.location.lng
+        }
+      }
+    })
+    $('#select-street-modal').modal('hide')
+  }
+
+  handleGps (selection) {
+    return (event) => {
+      event.preventDefault()
+      switch (selection) {
+        case 'MAP':
+          $('#select-street-modal').modal('show')
+          break
+
+        case 'AUTOMATIC':
+          if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const { latitude, longitude } = position.coords
+              Api.reverseGeocode(latitude, longitude)
+                .then((json) => {
+                  this.setState({ // eslint-disable-line
+                    address: {
+                      name: json.results[0].formatted_address,
+                      coords: { latitude, longitude }
+                    }
+                  })
+                })
+            })
+          } else {
+            console.err('Browser does not support the geolocation functionality')
+          }
+          break
+      }
+    }
+  }
+
   render (props) {
     return (
       <form id="user-form" className="ui form">
+        <SelectStreetModal onClick={this.handleAddress.bind(this)} />
         <div className="field">
-          <label><h2>{this.props.userData}</h2></label>
+          <label><h2>{this.props.userData}s Daten bearbeiten</h2></label>
         </div>
 
         <div className="field">
           <label>Passwort</label>
           <input onChange={this.handleChange('password')}
                  type="password" name="password" value={this.state.password}/>
+        </div>
+
+        <div className="field">
+
+          <label>Passwort wiederholen</label>
+          <input onChange={this.handleChange('passwordTest')}
+                 type="password" name="passwordTest" placeholder="Nur bei Änderung des Passworts notwendig"/>
         </div>
 
         <div className="field">
@@ -61,10 +122,20 @@ class UserPage extends Component {
                  type="text" name="email" value={this.state.email}/>
         </div>
 
+        <div className="ui action field">
+          <label>Aktueller Standpunkt</label>
+          <input type="text" name="location" value={this.state.address.name}/>
+          <div className="ui buttons">
+            <button onClick={this.handleGps('MAP')} className="ui button">Straße</button>
+            <div className="or" data-text="or"></div>
+            <button onClick={this.handleGps('AUTOMATIC')} className="ui positive button">Automatisch</button>
+          </div>
+        </div>
+
         <div className="field">
-          <label>Adresse</label>
-          <input onChange={this.handleChange('postalCode')}
-                 type="text" name="postalCode" value={this.state.postalCode} />
+          <label>Bewegungsradius</label>
+          <input onChange={this.handleChange('radius')}
+                 type="text" name="radius" value={this.state.radius} />
         </div>
 
         <button className="ui button" type="submit">Speichern</button>
@@ -77,20 +148,20 @@ UserPage.propTypes = {
   onSub: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   userData: PropTypes.string.isRequired,
-  userPass: PropTypes.string.isRequired,
   userTel: PropTypes.string.isRequired,
   userMail: PropTypes.string.isRequired,
-  userPostal: PropTypes.string.isRequired
+  userLocation: PropTypes.string.isRequired,
+  userRadius: PropTypes.string.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => ({
   onSub (state) {
     const payload = {
         username: state.username,
-        password: state.password,
         phoneNr: state.mobile,
         email: state.email,
-        location: state.postalCode
+        location: state.location,
+        radius: state.radius
     }
     console.log(payload)
     fetch('http://localhost:8000/api/users/'+state.username, {
@@ -105,10 +176,10 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   isLoggedIn: Boolean(R.path(['global', 'user', 'data'], state)),
   userData: R.path(['global', 'user', 'data', 'username'], state),
-  userPass: R.path(['global', 'user', 'data', 'password'], state),
   userTel: R.path(['global', 'user', 'data', 'phoneNr'], state),
   userMail: R.path(['global', 'user', 'data', 'email'], state),
-  userPostal: R.path(['global', 'user', 'data', 'address'], state)
+  userLocation: R.path(['global', 'user', 'data', 'location'], state),
+  userRadius: R.path(['global', 'user', 'data', 'radius'], state)
 })
 
 export default connect(
