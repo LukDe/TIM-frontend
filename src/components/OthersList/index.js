@@ -8,7 +8,7 @@ function OthersList ({ requests, offusername, userloc, userrad }) {
   return (
     <div className="ui big middle aligned very relaxed selection divided list">
       {requests
-        .filter((req) => req.goodName === 'other' && req.active === true  && load(offusername,req.location,req.radius,userloc,userrad) === true)
+        .filter((req) => req.goodName === 'other' && req.active === true ) //&& load(offusername,req.location,req.radius,userloc,userrad) === true)
         .map((req) =>
           (<OthersListItem
                 key={req.id}
@@ -29,6 +29,7 @@ OthersList.propTypes = {
 
 function load(offusername,reqloc,reqrad,userloc,userrad){
 
+  userrad = 5000000000000
   if(offusername === undefined){ //nicht eingeloggt, sieht alle otherlistitems
     return true;
   }else{
