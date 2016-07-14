@@ -131,7 +131,7 @@ class UserOfferModal extends Component {
     return (
       <div ref={(n) => this.modal = n} className="ui modal">
         <div className="header">
-          Ihre Gebot für  {goods[this.props.goodName]} bearbeiten:
+          Ihr Gebot für  {goods[this.props.goodName]} bearbeiten:
         </div>
         <div className="content">
           <form id="offerEdit-form" className="ui form">
