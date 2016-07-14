@@ -169,11 +169,6 @@ class UserOfferModal extends Component {
               <input onChange={this.handleChange('priority')} type="text" name="priority" value={this.state.priority}/>
             </div>
 
-            <div className="ui checkbox">
-              <label>Anfrage aktiv?</label>
-              <input onChange={this.handleChange('active')} type="checkbox" name="active" checked=""/>
-            </div>
-
             <div>
               <button className="ui button" type="submit">
                 Bestätigen
