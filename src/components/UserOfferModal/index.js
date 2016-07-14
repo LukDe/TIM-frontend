@@ -131,7 +131,7 @@ class UserOfferModal extends Component {
     return (
       <div ref={(n) => this.modal = n} className="ui modal">
         <div className="header">
-          Ihre Anfrage nach  {goods[this.props.goodName]} bearbeiten:
+          Ihre Gebot für  {goods[this.props.goodName]} bearbeiten:
         </div>
         <div className="content">
           <form id="offerEdit-form" className="ui form">
@@ -162,11 +162,6 @@ class UserOfferModal extends Component {
             <div className="field">
               <label>In welchem Umkreis?</label>
               <input onChange={this.handleChange('radius')} type="text" name="radius" value={this.state.radius}/>
-            </div>
-
-            <div className="field">
-              <label>Dringlichkeit</label>
-              <input onChange={this.handleChange('priority')} type="text" name="priority" value={this.state.priority}/>
             </div>
 
             <div>
